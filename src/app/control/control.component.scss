@@ -1,0 +1,32 @@
+$primary-color: #f456c4;
+$secondary-color:#56f485;
+.form-player{
+    background: rgb(218, 131, 131);
+    box-shadow: 0 0 10px black;
+    margin-left: 20%;
+    margin-right: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    h1{
+        text-align: center;
+    }
+}
+.team-list{
+    background: $primary-color;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 150px;
+    width: 100%;
+    margin: 20px;
+    text-align: center;
+  }
+.list-item{
+    margin: 10px
+}

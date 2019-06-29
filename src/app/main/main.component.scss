@@ -1,0 +1,65 @@
+$primary-color: #f456c4;
+$secondary-color:#56f485;
+.intro{
+    margin-left: 10%;
+    margin-right: 10%;
+}
+.logo {
+  padding-left: 20px;
+  height: 50px;
+  width: 50px;
+}
+.main-nav-bar {
+  background: rgba(252, 114, 233, 0.671);
+  margin-bottom: 30px;
+  border-bottom: solid 2px pink;
+}
+.main-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: center;
+  font-size: 50px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid rgb(216, 67, 191);
+  color: rgb(241, 247, 240);
+}
+.container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 150px;
+  width: 100%;
+}
+ul {
+  margin: 0%;
+  padding: 0%;
+}
+li {
+  a {
+    text-decoration-line: none;
+  }
+  font-family: "Lobster", cursive;
+  display: block;
+  font-size: 40px;
+  color: #04aded;
+}
+.game-info {
+  height: 30px;
+  color: pink;
+}
+
+.game > p {
+  color: gray;
+  font-size: small;
+  text-align: center;
+}
+.futureGame,.lastGame{
+    background: green;
+}
+.result{
+    background: black;
+}
