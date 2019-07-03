@@ -1,8 +1,12 @@
 $primary-color: #f456c4;
 $secondary-color:#56f485;
 .intro{
-    margin-left: 10%;
-    margin-right: 10%;
+  background: #C2185B;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    box-shadow: 0 0 2px black;
+    
 }
 .logo {
   padding-left: 20px;
@@ -10,7 +14,7 @@ $secondary-color:#56f485;
   width: 50px;
 }
 .main-nav-bar {
-  background: rgba(252, 114, 233, 0.671);
+  background: #76FF03;
   margin-bottom: 30px;
   border-bottom: solid 2px pink;
 }
@@ -21,10 +25,9 @@ $secondary-color:#56f485;
   height: 150px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   text-align: center;
-  font-size: 50px;
+  font-size: 35px;
   padding-top: 20px;
   padding-bottom: 20px;
-  border-bottom: 2px solid rgb(216, 67, 191);
   color: rgb(241, 247, 240);
 }
 .container {
@@ -41,11 +44,13 @@ ul {
 li {
   a {
     text-decoration-line: none;
+    font-size: 25px;
+    color: black;
   }
   font-family: "Lobster", cursive;
   display: block;
   font-size: 40px;
-  color: #04aded;
+  color: #fcfcfc;
 }
 .game-info {
   height: 30px;
@@ -58,8 +63,11 @@ li {
   text-align: center;
 }
 .futureGame,.lastGame{
-    background: green;
+  border: #f456c4 solid 2px;
 }
 .result{
-    background: black;
+}
+h2{
+  color: white;
+  font-size: small;
 }

@@ -11,6 +11,14 @@ import { TeamComponent } from './team/team.component';
 import { Routes, RouterModule } from '@angular/router';
 import { MainComponent } from './main/main.component';
 import { ControlComponent } from './control/control.component';
+import { FormsModule } from '@angular/forms';
+import { CalendarComponent } from './calendar/calendar.component';
+import { StatisticComponent } from './statistic/statistic.component';
+import { MatchCompositionComponent } from './statistic/match-composition/match-composition.component';
+import { YellowCardComponent } from './statistic/yellow-card/yellow-card.component';
+import { RedCardComponent } from './statistic/red-card/red-card.component';
+import { GoalsComponent } from './statistic/goals/goals.component';
+import { PassesComponent } from './statistic/passes/passes.component';
 
 
 @NgModule({
@@ -18,7 +26,14 @@ import { ControlComponent } from './control/control.component';
     AppComponent,
     TeamComponent,
     MainComponent,
-    ControlComponent
+    ControlComponent,
+    CalendarComponent,
+    StatisticComponent,
+    MatchCompositionComponent,
+    YellowCardComponent,
+    RedCardComponent,
+    GoalsComponent,
+    PassesComponent
   ],
   imports: [
     BrowserModule,
@@ -27,6 +42,8 @@ import { ControlComponent } from './control/control.component';
     MatButtonModule,
     MatFormFieldModule,
     MaterialModule,
+    FormsModule,
+    RouterModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

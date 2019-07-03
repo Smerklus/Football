@@ -1,0 +1,41 @@
+<div class="main-container">
+    <h1>Календарь игр</h1>
+  <mat-form-field>
+    <mat-label>Все матчи</mat-label>
+  <mat-select >
+    <mat-option *ngFor="let matchType of matchTypes" [value]="matchType">
+      {{matchType.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<mat-form-field>
+<mat-label>Все команды</mat-label>
+  <mat-select >
+    <mat-option *ngFor="let teamType of teamTypes" [value]="teamType">
+      {{teamType.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<table align="center" >
+  <tbody>
+    <tr>
+      <th>Дата</th>
+      <th>Время</th>
+      <th>Соперник</th>
+      <th>Счет</th>
+    </tr>
+    <tr>
+      <td>16 июня 2019</td>
+      <td>10:50</td>
+      <td>СК Волна</td>
+      <td>2:1</td>
+    </tr>
+    <tr>
+      <td>17 июня 2019</td>
+      <td>12:50</td>
+      <td>Балт АВТО</td>
+      <td>2:2</td>
+    </tr>
+  </tbody>
+</table>
+</div>

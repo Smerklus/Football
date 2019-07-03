@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { summaryFileName } from '@angular/compiler/src/aot/util';
-export interface Team {
+export interface TeamType {
   value: string;
   viewValue: string;
+}
+export interface Player {
+  name: string;
+  surname: string;
+  teamType: TeamType;
 }
 @Component({
   selector: 'app-control',
@@ -11,8 +16,8 @@ export interface Team {
 })
 export class ControlComponent {
 
-  teams: Team[] = [
-    { value: 'mini-taem', viewValue: 'Мини-футбол' },
+  teamTypes: TeamType[] = [
+    { value: 'mini-team', viewValue: 'Мини-футбол' },
     { value: 'mass-team', viewValue: 'Массовый футбол' },
     { value: 'mini-team-double', viewValue: 'Мини-футбол дубль' }
   ];
@@ -20,28 +25,22 @@ export class ControlComponent {
   inputName;
   inputSname;
   newVal;
-  teamComposition: [
-    {
-      name: string,
-      surname: string,
-      composition: string
-    }
-  ];
+  players: Player[] = [];
 
   constructor() { }
-  public onChange(event): void {  // event will give you full breif of action
-    this.newVal = event.target.value;
+  public onChange(event): void {
+    this.newVal = event.value;
     console.log(this.newVal);
   }
 
   addPlayer() {
-    this.teamComposition.push(
+    this.players.push(
       {
         name: this.inputName,
         surname: this.inputSname,
-        composition: this.newVal
+        teamType: this.newVal
       })
-    console.log(this.teamComposition)
+    console.log(this.players)
   };
 
 

@@ -1,1 +1,29 @@
+<div class="intro">
+     <div class="main-title"> Футбольный клуб РИВ ГОШ
+            <img class="logo" src="https://cs5-1.4pda.to/6029462.png" alt="">
+          </div>
+    <!-- <div class="content"> -->
+    <div class="main-nav-bar">
+       
+      <ul class="menu-nav">
+        <li>
+          <a [routerLink]="['']">Новости</a>
+        </li>
+        <li><a [routerLink]="['/team']">Команды</a></li>
+  
+        <li>
+          <a [routerLink]="['/calendar']">Календарь</a>
+        </li>
+        <li>
+          <a [routerLink]="['/statistic']">Статистика</a>
+        </li>
+        <li>
+          <a [routerLink]="['']">Контакты</a>
+        </li>
+      </ul>
+    </div>
+    <div class="container-content">
 <router-outlet></router-outlet>
+</div>
+</div>
+<!-- </div> -->

@@ -1,7 +1,15 @@
 $primary-color: #f456c4;
 $secondary-color:#56f485;
+.intro {
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    box-shadow: 0 0 2px black;
+    height: auto;
+}
+    
 .team-list{
-    background: $primary-color;
+    background: rgb(190, 190, 74);
     margin: 20px;
     display: flex;
     flex-direction: column;
@@ -23,21 +31,18 @@ $secondary-color:#56f485;
     height: 150px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: center;
-    font-size: 50px;
+    font-size: 35px;
     padding-top: 20px;
     padding-bottom: 20px;
     border-bottom: 2px solid rgb(216, 67, 191);
     color: rgb(241, 247, 240);
   }
-.team-control{
-    display: grid;
-}
 .container {
     display: flex;
     justify-content: space-around;
     align-items: center;
     height: 150px;
-    width: 100%;
+    width: inherit;
     margin: 20px;
   }
 .list-item{
@@ -48,10 +53,10 @@ $secondary-color:#56f485;
     margin-bottom: 15px;
     border-bottom: solid 2px black;
 }
-.team-control, a{
+.team-control{
+    display: grid;
     text-decoration: none;
     text-align: center;
     border: solid 2px red;
-    background: red;
     color: wheat;
 }

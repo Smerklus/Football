@@ -1,44 +1,50 @@
+<div class="main-container">
 <div class="form-player">
   <h1>Заполните форму игрока</h1>
   <div class="container">
     <mat-form-field>
-      <input matInput placeholder="Имя" ([ngModel])='inputName'>
+      <input matInput placeholder="Имя" [(ngModel)]='inputName'>
     </mat-form-field>
-    <div class="container">
       <mat-form-field>
-        <input matInput placeholder="Фамилия" ([ngModel])='inputSname'>
+        <input matInput placeholder="Фамилия" [(ngModel)]='inputSname'>
       </mat-form-field><br>
-      <div class="container">
       <mat-form-field>
         <mat-label>Состав</mat-label>
-        <mat-select (change)="onChange($event)">
-          <mat-option *ngFor="let team of teams" [value]="team.value">
-            {{team.viewValue}}
+        <mat-select (selectionChange)="onChange($event)">
+          <mat-option *ngFor="let teamType of teamTypes" [value]="teamType">
+            {{teamType.viewValue}}
           </mat-option>
         </mat-select>
       </mat-form-field>
-    </div>
     <button mat-button (click)="addPlayer()">Добавить игрока</button>
 </div>
 <div class="team-composition">
   <h1>Текущий Состав</h1>
   <div class="team-list">
-      <div class="container">
         <div class="mini list-item">
           <header class="text-center">
             Команда по мини-футболу
           </header>
+          <div *ngFor=" let player of players">
+          <p *ngIf= "player.teamType.value==='mini-team'"> {{player.name}}  {{player.surname}}</p>  
+          </div>
         </div>
         <div class="mass list-item">
           <header class="text-center">
             Команда по массовому массовому футболу
           </header>
+          <div *ngFor=" let player of players">
+            <p *ngIf= "player.teamType.value==='mass-team'"> {{player.name}}  {{player.surname}}</p>  
+            </div>
         </div>
         <div class="double list-item">
           <header class="text-center">
             Команда по массовому мини-футболу (дубль)
           </header>
+          <div *ngFor=" let player of players">
+            <p *ngIf= "player.teamType.value==='mini-team-double'"> {{player.name}}  {{player.surname}}</p>  
+            </div>
         </div>
-      </div>
     </div>
+
 </div>
