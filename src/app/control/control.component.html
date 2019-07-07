@@ -1,50 +1,67 @@
 <div class="main-container">
-<div class="form-player">
-  <h1>Заполните форму игрока</h1>
-  <div class="container">
-    <mat-form-field>
-      <input matInput placeholder="Имя" [(ngModel)]='inputName'>
-    </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Фамилия" [(ngModel)]='inputSname'>
+  <div class="form-player">
+    <h1>Заполните форму игрока</h1>
+    <div class="container">
+      <mat-form-field style="width: 320px">
+        <input matInput placeholder="Имя" autocomplete="off" [(ngModel)]='inputName'>
+      </mat-form-field>
+      <mat-form-field style="width: 320px">
+        <input matInput placeholder="Фамилия" autocomplete="off" [(ngModel)]='inputSname'>
       </mat-form-field><br>
-      <mat-form-field>
-        <mat-label>Состав</mat-label>
-        <mat-select (selectionChange)="onChange($event)">
+      <mat-form-field style="width: 320px">
+        <mat-label>Амплуа</mat-label>
+        <mat-select (selectionChange)="changeRole($event)">
+          <mat-option *ngFor="let role of roles" [value]="role">
+            {{role.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field style="width: 320px">
+        <mat-label>Команда</mat-label>
+        <mat-select (selectionChange)="changeTeamType($event)">
           <mat-option *ngFor="let teamType of teamTypes" [value]="teamType">
             {{teamType.viewValue}}
           </mat-option>
         </mat-select>
       </mat-form-field>
-    <button mat-button (click)="addPlayer()">Добавить игрока</button>
-</div>
-<div class="team-composition">
-  <h1>Текущий Состав</h1>
-  <div class="team-list">
-        <div class="mini list-item">
-          <header class="text-center">
-            Команда по мини-футболу
-          </header>
-          <div *ngFor=" let player of players">
-          <p *ngIf= "player.teamType.value==='mini-team'"> {{player.name}}  {{player.surname}}</p>  
-          </div>
-        </div>
-        <div class="mass list-item">
-          <header class="text-center">
-            Команда по массовому массовому футболу
-          </header>
-          <div *ngFor=" let player of players">
-            <p *ngIf= "player.teamType.value==='mass-team'"> {{player.name}}  {{player.surname}}</p>  
-            </div>
-        </div>
-        <div class="double list-item">
-          <header class="text-center">
-            Команда по массовому мини-футболу (дубль)
-          </header>
-          <div *ngFor=" let player of players">
-            <p *ngIf= "player.teamType.value==='mini-team-double'"> {{player.name}}  {{player.surname}}</p>  
-            </div>
-        </div>
+      <button mat-raised-button color="accent" (click)="addPlayer()">
+        <mat-icon style="font-size: 20px">add_circle_outline</mat-icon> Добавить игрока
+      </button>
     </div>
+    <div class="team-composition">
+      <h1>Текущий Состав</h1>
+      <div class="team-list">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-</div>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Имя </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="surname">
+            <th mat-header-cell *matHeaderCellDef> Фамилия </th>
+            <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef> Амплуа </th>
+            <td mat-cell *matCellDef="let element"> {{element.role.viewValue}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="team">
+            <th mat-header-cell *matHeaderCellDef> Команда </th>
+            <td mat-cell *matCellDef="let element"> {{element.teamType.viewValue}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element"> <button mat-button (click)="deletePlayer($event)">
+                <img src="assets\img\outline-clear-24px.svg" alt=""> </button> </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+
+    </div>

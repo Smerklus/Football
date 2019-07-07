@@ -1,12 +1,36 @@
-<table>
-  <tbody>
-    <tr>
-      <td [routerLink]="['/statistic/match_composition']">Заяка на матч</td>
-      <td [routerLink]="['/statistic/yellow_card']">Желтые карточки</td>
-      <td [routerLink]="['/statistic/red_card']">Красные карточки</td>
-      <td [routerLink]="['/statistic/goals']">Голы</td>
-      <td [routerLink]="['/statistic/passes']">Передачи</td>
-    </tr>
-  </tbody>
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+  <ng-container matColumnDef="player">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Игрок </th>
+    <td mat-cell *matCellDef="let element"> {{element.player}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="countMatchs">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Количество матчей </th>
+    <td mat-cell *matCellDef="let element"> {{element.countMatchs}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="yellowCard">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Желтые карточки <img style="font-size: 24px;width:24px; height:24px; margin-left: 3px" src="assets\img\жк2.png" alt=""> </th>
+    <td mat-cell *matCellDef="let element"> {{element.yellowCard}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="redCard">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Красные карточки <img style="font-size: 24px; width:24px; height:24px; margin-left: 3px" src="assets\img\КК2.png" alt=""> </th>
+    <td mat-cell *matCellDef="let element"> {{element.redCard}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="goal">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Голы <img style="font-size: 24px; width:24px; height:24px; margin-left: 3px" src="https://pngicon.ru/file/uploads/1_1735.png" alt=""> </th>
+    <td mat-cell *matCellDef="let element"> {{element.goal}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="pass">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Передачи <img style="font-size: 24px; width:24px; height:24px; margin-left: 3px" src="https://image.flaticon.com/icons/png/512/8/8314.png" alt=""> </th>
+    <td mat-cell *matCellDef="let element"> {{element.pass}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<router-outlet></router-outlet>
+

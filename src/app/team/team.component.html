@@ -2,36 +2,39 @@
   <div class="container">
     <div class="mini list-item">
       <header class="text-center">
-        Команда по мини-футболу
+        РИВ ГОШ
       </header>
-      <div class="clearfix">
+      <div class="trainers-list">
+        <h2>Тренерский и руководящий состав</h2>
         <div>тренер</div>
         <div>капитан</div>
         <div>вице-капитан</div>
       </div>
+      <div class="players-list">
+        <h2>Состав команды</h2>
+        <div>{{player.name}}</div>
+        <div>Игрок 2</div>
+        <div>Игрок 3</div>
+      </div>
     </div>
-    <div class="mass list-item">
+    <div class="mini list-item">
       <header class="text-center">
-        Команда по массовому массовому футболу
+        РИВ ГОШ - д
       </header>
-      <div class="clearfix">
+      <div class="trainers-list">
+        <h2>Тренерский и руководящий состав</h2>
         <div>тренер</div>
         <div>капитан</div>
         <div>вице-капитан</div>
       </div>
-    </div>
-    <div class="double list-item">
-      <header class="text-center">
-        Команда по массовому мини-футболу (дубль)
-      </header>
-      <div class="clearfix">
-        <div>тренер</div>
-        <div>капитан</div>
-        <div>вице-капитан</div>
+      <div class="players-list">
+        <h2>Состав команды</h2>
+        <div>Игрок 1</div>
+        <div>Игрок 2</div>
+        <div>Игрок 3</div>
       </div>
     </div>
   </div>
-  <div class="team-control">
-      <button mat-button [routerLink]="['/control_panel']">Управление составом</button>
-  </div>
+      <button mat-raised-button color='accent' [routerLink]="['/control_panel']">
+         <mat-icon>create</mat-icon> Управление составом</button>
 </div>

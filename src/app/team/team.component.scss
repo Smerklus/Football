@@ -1,62 +1,85 @@
-$primary-color: #f456c4;
-$secondary-color:#56f485;
+$primary-color: #76ff03;
+$primary-dark-color: #32cb00;
+$primary-light-color: #b0ff57;
+$secondary-color: #ff4081;
+$secondary-dark-color: #c60055;
+$secondary-light-color: #ff79b0;
 .intro {
-    margin-left: auto;
-    margin-right: auto;
-    width: 60%;
-    box-shadow: 0 0 2px black;
-    height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+  box-shadow: 0 0 2px black;
+  height: auto;
 }
-    
-.team-list{
-    background: rgb(190, 190, 74);
-    margin: 20px;
-    display: flex;
-    flex-direction: column;
+
+.team-list {
+  background: #bbbaba;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  height: auto;
 }
-.text-center{
-    font-size: 15px;
-    color: $secondary-color;
-    text-align: center;
+.text-center {
+  font-size: 15px;
+  text-align: center;
 }
 .logo {
-    padding-left: 20px;
-    height: 50px;
-    width: 50px;
+  padding-left: 20px;
+  height: 50px;
+  width: 50px;
 }
 .main-title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 150px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    text-align: center;
-    font-size: 35px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid rgb(216, 67, 191);
-    color: rgb(241, 247, 240);
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: center;
+  font-size: 35px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid rgb(216, 67, 191);
+  color: rgb(241, 247, 240);
+}
 .container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 150px;
-    width: inherit;
-    margin: 20px;
-  }
-.list-item{
-    margin: 10px
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: auto;
+  width: inherit;
+  margin: 20px;
 }
-.text-center{
-    padding-bottom: 15px;
-    margin-bottom: 15px;
-    border-bottom: solid 2px black;
+.list-item {
+  margin: 10px;
 }
-.team-control{
-    display: grid;
-    text-decoration: none;
-    text-align: center;
-    border: solid 2px red;
-    color: wheat;
+.text-center {
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  border-bottom: solid 2px black;
+}
+.team-control {
+  
+    img {
+      height: 20px;
+      width: 20px;
+    }
+    
+  margin-right: 6px;
+  margin-bottom: 6px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
+  text-decoration: none;
+  text-align: center;
+  background: $secondary-color;
+  align-self: flex-end;
+  display: block;
+  width: 220px;
+}
+.trainers-list {
+  margin-bottom: 10px;
+  border-bottom: 2px solid black;
+  padding-bottom: 10px;
+}
+h2 {
+  font-size: 15px;
 }

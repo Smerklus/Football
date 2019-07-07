@@ -1,5 +1,9 @@
-$primary-color: #f456c4;
-$secondary-color:#56f485;
+$primary-color: #76ff03;
+$primary-dark-color: #32cb00;
+$primary-light-color: #b0ff57;
+$secondary-color: #ff4081;
+$secondary-dark-color: #c60055;
+$secondary-light-color: #ff79b0;
 .intro{
   background: #C2185B;
     margin-left: auto;
@@ -64,8 +68,6 @@ li {
 }
 .futureGame,.lastGame{
   border: #f456c4 solid 2px;
-}
-.result{
 }
 h2{
   color: white;

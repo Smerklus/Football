@@ -1,29 +1,36 @@
 <div class="intro">
-     <div class="main-title"> Футбольный клуб РИВ ГОШ
-            <img class="logo" src="https://cs5-1.4pda.to/6029462.png" alt="">
-          </div>
-    <!-- <div class="content"> -->
-    <div class="main-nav-bar">
-       
-      <ul class="menu-nav">
-        <li>
-          <a [routerLink]="['']">Новости</a>
-        </li>
-        <li><a [routerLink]="['/team']">Команды</a></li>
-  
-        <li>
-          <a [routerLink]="['/calendar']">Календарь</a>
-        </li>
-        <li>
-          <a [routerLink]="['/statistic']">Статистика</a>
-        </li>
-        <li>
-          <a [routerLink]="['']">Контакты</a>
-        </li>
-      </ul>
-    </div>
-    <div class="container-content">
-<router-outlet></router-outlet>
+  <div class="main-title" [routerLink]="['/']"> Футбольный клуб РИВ ГОШ
+    <img class="logo" src="https://cs5-1.4pda.to/6029462.png" alt="">
+  </div>
+  <!-- <div class="content"> -->
+  <table class="main-nav-bar">
+    <tbody class="menu-nav">
+      <tr>
+        <td>
+            <button mat-button [routerLink]="['']">Новости</button>
+          <!-- <a [routerLink]="['']">Новости</a> -->
+        </td>
+        <td>
+            <button mat-button [routerLink]="['/team']">Команды</button>
+          <!-- <a [routerLink]="['/team']">Команды</a> -->
+        </td>
+
+        <td>
+            <button mat-button [routerLink]="['/calendar']">Календарь</button>
+          <!-- <a [routerLink]="['/calendar']">Календарь</a> -->
+        </td>
+        <td>
+            <button mat-button [routerLink]="['/statistic']">Статистика</button>
+          <!-- <a [routerLink]="['/statistic']">Статистика</a> -->
+        </td>
+        <td>
+            <button mat-button [routerLink]="['']">Контакты</button>
+          <!-- <a [routerLink]="['']">Контакты</a> -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+<div class="container-content">
+  <router-outlet></router-outlet>
 </div>
 </div>
-<!-- </div> -->
