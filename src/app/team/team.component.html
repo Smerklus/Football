@@ -12,9 +12,10 @@
       </div>
       <div class="players-list">
         <h2>Состав команды</h2>
-        <div>{{player.name}}</div>
-        <div>Игрок 2</div>
-        <div>Игрок 3</div>
+        <div *ngFor='let player of players'>
+          <div *ngIf='player.teamType.value=="main"'>{{player.name}} {{player.surname}}</div> 
+        </div>
+        
       </div>
     </div>
     <div class="mini list-item">
@@ -29,9 +30,9 @@
       </div>
       <div class="players-list">
         <h2>Состав команды</h2>
-        <div>Игрок 1</div>
-        <div>Игрок 2</div>
-        <div>Игрок 3</div>
+        <div *ngFor='let player of players'>
+            <div *ngIf='player.teamType.value=="d"'>{{player.name}} {{player.surname}}</div> 
+          </div>
       </div>
     </div>
   </div>

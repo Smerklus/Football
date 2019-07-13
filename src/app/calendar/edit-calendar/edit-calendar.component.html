@@ -1,0 +1,29 @@
+<div class="form-player">
+  <h1>Заполните календарь игр</h1>
+  <div class="container">
+    
+    <!-- Форма выбора даты -->
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" placeholder="Выберите дату игры" [(ngModel)]='inputData'>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Форма выбора времени -->
+    <app-time-picker (onAddTime)="updateTime($event)"></app-time-picker>
+    <br>
+
+    <!-- Форма выбора команды соперника -->
+    <mat-form-field style="width: 218px">
+      <input matInput placeholder="Введите команду соперника" autocomplete="off" [(ngModel)]='inputOponent'>
+    </mat-form-field>
+
+    <!-- Форма выбора итогового счета матча -->
+    <app-game-score-picker (onAddScore)="updateScore($event)"></app-game-score-picker>
+    <br>
+
+    <button mat-raised-button color="accent" (click)="addCalendarMatch()">
+      <mat-icon style="font-size: 20px">add_circle_outline</mat-icon> Добавить данные о матче
+    </button>
+  </div>
+</div>

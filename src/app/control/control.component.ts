@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material';
+import { PlayerService } from '../services/player.service';
+import { Player } from '../models/player.model';
 export interface Role {
   value: string;
   viewValue: string;
@@ -7,12 +9,6 @@ export interface Role {
 export interface TeamType {
   value: string;
   viewValue: string;
-}
-export interface Player {
-  name: string;
-  surname: string;
-  role: Role;
-  teamType: TeamType;
 }
 
 @Component({
@@ -38,10 +34,11 @@ export class ControlComponent {
   players: Player[] = [];
 
   displayedColumns: string[] = ['name', 'surname', 'role', 'team', 'delete'];
-  dataSource = this.players;
 
   @ViewChild(MatTable, { static: false }) table: MatTable<any>;
-  constructor() { }
+  constructor(public playerApi: PlayerService) {
+    playerApi.getPlayers().subscribe(x => this.players = x)
+  }
 
   public changeRole(event): void {
     this.selectedRole = event.value;
@@ -53,24 +50,29 @@ export class ControlComponent {
   }
 
   addPlayer() {
-    this.players.push(
+    this.playerApi.postPlayer(
       {
         name: this.inputName,
         surname: this.inputSname,
         role: this.selectedRole,
         teamType: this.selectedTeamType,
+      }).subscribe(x => {
+        this.players.push(x)
+        this.table.renderRows();
+        this.inputName = '';
+        this.inputSname = '';
+        console.log(this.players)
       })
-    this.table.renderRows();
-    this.inputName = '';
-    this.inputSname = '';
-    console.log(this.players)
+
   };
 
   deletePlayer(player) {
-    this.players.splice(player.path[4].rowIndex - 1, 1)
-    this.table.renderRows();
-    console.log(player)
-  };
+    this.playerApi.deletePlayer(player.path[1].childNodes[1].innerHTML).subscribe(x => {
+      this.players.splice(player.path[4].rowIndex - 1, 1);
+      this.table.renderRows();
+      console.log(player);
+  })
+};
 
 
 }

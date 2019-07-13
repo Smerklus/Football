@@ -1,0 +1,65 @@
+.time-picker{
+  display: inline-flex;
+  justify-content: space-around;
+  padding-bottom: 7px;
+  margin-left: 20px;
+  p{
+    height: 18px;
+    padding-bottom: 7px;
+    color: grey;
+  }
+  
+  
+}
+.time-container{
+  position: relative;
+    right: 0px;
+    bottom:18px;
+}
+
+.half-time-picker{
+  display: inline-flex;
+  flex-direction: column-reverse;
+}
+
+span{
+  align-self: center;
+  height: inherit;
+  bottom: 42px;
+  position: inherit;
+    border-bottom: 1px solid grey;
+    font-size: 17px;
+    padding-bottom: 6px;
+}
+
+.picker {
+  padding-bottom: 5px;
+  font-weight: 400;
+  font-size: 17px;
+  -moz-appearance: textfield;
+  background: none;
+  border: none;
+  border-bottom: 1px solid grey;
+  width: 28px;
+  text-align: center;
+ 
+}
+ .picker::-webkit-inner-spin-button {
+    display: none;
+  }
+
+  button{
+    padding: 0px;
+    height: 28px;
+    width: 28px;
+  }
+
+  .minus-button{
+    margin-top: 5px;
+  }
+  .plus-button{
+    margin-bottom: 5px;
+  }
+  mat-icon{
+    pointer-events: none;
+  }

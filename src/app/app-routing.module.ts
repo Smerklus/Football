@@ -10,6 +10,7 @@ import { GoalsComponent } from './statistic/goals/goals.component';
 import { PassesComponent } from './statistic/passes/passes.component';
 import { RedCardComponent } from './statistic/red-card/red-card.component';
 import { YellowCardComponent } from './statistic/yellow-card/yellow-card.component';
+import { EditCalendarComponent } from './calendar/edit-calendar/edit-calendar.component';
 
 const statisticRoutes: Routes = [
   { path: 'match_composition', component: MatchCompositionComponent },
@@ -23,6 +24,7 @@ const appRoutes: Routes = [
   { path: 'team', component: TeamComponent },
   { path: 'control_panel', component: ControlComponent },
   { path: 'calendar', component: CalendarComponent },
+  { path: 'edit_calendar', component: EditCalendarComponent },
   { path: 'statistic', component: StatisticComponent, children: statisticRoutes },
   { path: '', component: MainComponent },
   

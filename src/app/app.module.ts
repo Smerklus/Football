@@ -19,6 +19,13 @@ import { YellowCardComponent } from './statistic/yellow-card/yellow-card.compone
 import { RedCardComponent } from './statistic/red-card/red-card.component';
 import { GoalsComponent } from './statistic/goals/goals.component';
 import { PassesComponent } from './statistic/passes/passes.component';
+import { HttpClientModule } from '@angular/common/http';
+import { PlayerService } from './services/player.service';
+import { EditCalendarComponent } from './calendar/edit-calendar/edit-calendar.component';
+import { TimePickerComponent } from './time-picker/time-picker.component';
+import { TimePipe } from './time.pipe';
+import { GameScorePickerComponent } from './game-score-picker/game-score-picker.component';
+import { CalendarService } from './services/calendar.service';
 
 
 @NgModule({
@@ -33,7 +40,11 @@ import { PassesComponent } from './statistic/passes/passes.component';
     YellowCardComponent,
     RedCardComponent,
     GoalsComponent,
-    PassesComponent
+    PassesComponent,
+    EditCalendarComponent,
+    TimePickerComponent,
+    TimePipe,
+    GameScorePickerComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,8 +55,9 @@ import { PassesComponent } from './statistic/passes/passes.component';
     MaterialModule,
     FormsModule,
     RouterModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [PlayerService,CalendarService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
