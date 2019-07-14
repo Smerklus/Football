@@ -15,7 +15,7 @@ export class CalendarService{
     postCalendarMatch(calendarMatch){
         return this.http.post('http://localhost:3000/calendarMatches',calendarMatch).pipe(map(x=> x as CalendarMatch))
     }
-    deletePlayer(id){
+    deleteCalendarMatch(id){
         return this.http.delete('http://localhost:3000/calendarMatches/'+id)
     }
 }

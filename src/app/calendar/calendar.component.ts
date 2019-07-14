@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild, LOCALE_ID } from '@angular/core';
-import { MatTableDataSource, MatSort, MatTable } from '@angular/material';
+import { MatTableDataSource, MatSort, MatTable, MatDialog } from '@angular/material';
 import { CalendarMatch } from '../models/calendar-match.model';
 import { CalendarService } from '../services/calendar.service';
 import { TeamType } from '../models/team-type';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 export interface MatchType {
   value: string;
   viewValue: string;
@@ -43,7 +44,7 @@ export class CalendarComponent implements OnInit {
     }
   ];
 
-  displayedColumns: string[] = ['data', 'time', 'oponent', 'score'];
+  displayedColumns: string[] = ['data', 'time', 'oponent', 'score', 'delete'];
   dataSource: MatTableDataSource<CalendarMatch>;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -53,7 +54,7 @@ export class CalendarComponent implements OnInit {
   teams = [];
   teamsSet;
 
-  constructor(public calendarService: CalendarService) {
+  constructor(public calendarService: CalendarService, public dialog: MatDialog) {
     calendarService.getCalendarMatches().subscribe(x => {
       this.setDataSource(this.calendarMatches = x);
       this.calendarMatches.forEach(x => {
@@ -66,6 +67,15 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  openDialog(match) {
+    const dialogRef = this.dialog.open(DeleteDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+     if (result) this.deleteCalendarMatch(match);
+    });
+  }
+
 
   sortTeams() {
     this.teams.sort((a, b) => {
@@ -88,5 +98,16 @@ export class CalendarComponent implements OnInit {
   setDataSource(array: CalendarMatch[]) {
     this.dataSource = new MatTableDataSource(array);
     this.dataSource.sort = this.sort;
+  }
+  deleteCalendarMatch(match) {
+    this.calendarService.deleteCalendarMatch(match.path[1].childNodes[1].innerHTML).subscribe(x => {
+      this.calendarMatches.splice(match.path[4].rowIndex - 1, 1);
+      this.teams=[];
+      this.calendarMatches.forEach(x => {
+        this.teams.push(x.oponent);
+      });
+      this.sortTeams();
+      this.setDataSource(this.calendarMatches);
+    });
   }
 }

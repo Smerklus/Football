@@ -1,35 +1,15 @@
 <div class="intro">
   <div class="main-title" [routerLink]="['/']"> Футбольный клуб РИВ ГОШ
-    <img class="logo" src="https://cs5-1.4pda.to/6029462.png" alt="">
+    <img class="logo" src="https://img.nagradion.ru/images/bf300x500/shields/BGXN2zMV.png?1563090140" alt="">
   </div>
   <!-- <div class="content"> -->
-  <table class="main-nav-bar">
-    <tbody class="menu-nav">
-      <tr>
-        <td>
-            <button mat-button [routerLink]="['']">Новости</button>
-          <!-- <a [routerLink]="['']">Новости</a> -->
-        </td>
-        <td>
-            <button mat-button [routerLink]="['/team']">Команды</button>
-          <!-- <a [routerLink]="['/team']">Команды</a> -->
-        </td>
-
-        <td>
-            <button mat-button [routerLink]="['/calendar']">Календарь</button>
-          <!-- <a [routerLink]="['/calendar']">Календарь</a> -->
-        </td>
-        <td>
-            <button mat-button [routerLink]="['/statistic']">Статистика</button>
-          <!-- <a [routerLink]="['/statistic']">Статистика</a> -->
-        </td>
-        <td>
-            <button mat-button [routerLink]="['']">Контакты</button>
-          <!-- <a [routerLink]="['']">Контакты</a> -->
-        </td>
-      </tr>
-    </tbody>
-  </table>
+      <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+          <mat-button-toggle value="news" [routerLink]="['']" color="accent">Новости</mat-button-toggle>
+          <mat-button-toggle value="teams" [routerLink]="['/team']">Команды</mat-button-toggle>
+          <mat-button-toggle value="calendar" [routerLink]="['/calendar']">Календарь</mat-button-toggle>
+          <mat-button-toggle value="statistic" [routerLink]="['/statistic']">Статистика</mat-button-toggle>
+          <mat-button-toggle value="contacts" [routerLink]="['']">Контакты</mat-button-toggle>
+        </mat-button-toggle-group>
 <div class="container-content">
   <router-outlet></router-outlet>
 </div>

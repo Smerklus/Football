@@ -1,29 +1,105 @@
-<div class="form-player">
-  <h1>Заполните календарь игр</h1>
-  <div class="container">
-    
-    <!-- Форма выбора даты -->
-    <mat-form-field>
-      <input matInput [matDatepicker]="picker" placeholder="Выберите дату игры" [(ngModel)]='inputData'>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
+<div class="form-content">
+  <div class="form-calendar">
+    <div class="form-calendar-header">
+      <p>Заполните календарь игр</p>
+    </div>
+    <div class="form-calendar-body">
 
-    <!-- Форма выбора времени -->
-    <app-time-picker (onAddTime)="updateTime($event)"></app-time-picker>
-    <br>
+      <mat-accordion class="calendar-headers-align">
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Дата и время проведения матча
+            </mat-panel-title>
+            <mat-panel-description>
+              Выберите дату и время проведения матч
+              <mat-icon>date_range</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
 
-    <!-- Форма выбора команды соперника -->
-    <mat-form-field style="width: 218px">
-      <input matInput placeholder="Введите команду соперника" autocomplete="off" [(ngModel)]='inputOponent'>
-    </mat-form-field>
+          <!-- Форма выбора даты -->
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Выберите дату игры" [(ngModel)]='inputData'>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
 
-    <!-- Форма выбора итогового счета матча -->
-    <app-game-score-picker (onAddScore)="updateScore($event)"></app-game-score-picker>
-    <br>
+          <!-- Форма выбора времени -->
+          <app-time-picker (onAddTime)="updateTime($event)"></app-time-picker>
+          <br>
+          <!-- Форма выбора команды соперника -->
+          <mat-form-field style="width: 218px">
+            <input matInput placeholder="Введите команду соперника" autocomplete="off" [(ngModel)]='inputOponent'>
+          </mat-form-field>
 
-    <button mat-raised-button color="accent" (click)="addCalendarMatch()">
-      <mat-icon style="font-size: 20px">add_circle_outline</mat-icon> Добавить данные о матче
-    </button>
+          <!-- Форма выбора итогового счета матча -->
+          <app-game-score-picker (onAddScore)="updateScore($event)"></app-game-score-picker>
+
+          <mat-action-row>
+            <button mat-button color="primary" (click)="nextStep()">Next</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+
+
+        <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Состав команды
+            </mat-panel-title>
+            <mat-panel-description>
+              Выберите состав команды
+              <mat-icon>people</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <mat-tab-group >
+            <mat-tab label="РИВ ГОШ">
+              <div class="main-team-all-purpose">
+                <h3>Универсалы</h3>
+                <div class="main-team-checkbox" *ngFor="let player of players">
+                  <mat-checkbox *ngIf="player.teamType.value=='main' && player.role.value=='all-purpose'">
+                    {{player.name}} {{player.surname}}</mat-checkbox>
+                </div>
+              </div>
+              <div class="main-team-goalkeepers">
+                <h3>Голкиперы</h3>
+                <div class="main-team-checkbox" *ngFor="let player of players">
+                  <mat-checkbox *ngIf="player.teamType.value=='main' && player.role.value=='goalkeeper'">
+                    {{player.name}} {{player.surname}}</mat-checkbox>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab label="РИВ ГОШ - д">
+              <div class="d-team-all-purpose">
+                <h3>Универсалы</h3>
+                <div class="d-team-checkbox" *ngFor="let player of players">
+                  <mat-checkbox *ngIf="player.teamType.value=='d' && player.role.value=='all-purpose'">
+                    {{player.name}}" "{{player.surname}}</mat-checkbox>
+                </div>
+              </div>
+              <div class="main-team-goalkeepers">
+                <h3>Голкиперы</h3>
+                <div class="main-team-checkbox" *ngFor="let player of players">
+                  <mat-checkbox *ngIf="player.teamType.value=='d' && player.role.value=='goalkeeper'">
+                    {{player.name}}" "{{player.surname}}</mat-checkbox>
+                </div>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+
+
+
+          <mat-action-row>
+            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+            <button mat-button color="primary" (click)="nextStep()">Next</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+    <div class="form-bottom">
+      <button mat-raised-button color="accent" (click)="addCalendarMatch()">
+        <mat-icon style="font-size: 20px">add_circle_outline</mat-icon> Добавить данные о матче
+      </button>
+    </div>
+
   </div>
 </div>

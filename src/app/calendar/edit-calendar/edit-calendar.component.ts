@@ -3,6 +3,8 @@ import { TimePickerComponent } from 'src/app/time-picker/time-picker.component';
 import { CalendarService } from 'src/app/services/calendar.service';
 import { CalendarMatch } from 'src/app/models/calendar-match.model';
 import { MatTable } from '@angular/material';
+import { PlayerService } from 'src/app/services/player.service';
+import { Player } from 'src/app/models/player.model';
 
 @Component({
   selector: 'app-edit-calendar',
@@ -16,18 +18,37 @@ export class EditCalendarComponent implements OnInit {
   inputOponent;
   inputScore;
   calendarMatches: CalendarMatch[] = [];
-
+  players: Player[] =[];
+  teamType;
+  step = 0;
   @ViewChild(MatTable, { static: false }) table: MatTable<any>;
-  constructor(public calendarApi: CalendarService) {
-    calendarApi.getCalendarMatches().subscribe(x=>this.calendarMatches = x)
-   }
+  constructor(public calendarApi: CalendarService,public playerApi: PlayerService) {
+    calendarApi.getCalendarMatches().subscribe(x => this.calendarMatches = x);
+    playerApi.getPlayers().subscribe(x=>this.players = x);
+  }
 
-   updateTime(time){
-this.inputTime = time;
-   }
-   updateScore(score){
-this.inputScore = score;
-   }
+  chooseMainTeam(value){
+this.teamType=value;
+  }
+
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
+  }
+
+  updateTime(time) {
+    this.inputTime = time;
+  }
+  updateScore(score) {
+    this.inputScore = score;
+  }
 
   addCalendarMatch() {
     this.calendarApi.postCalendarMatch(

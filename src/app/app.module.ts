@@ -26,6 +26,8 @@ import { TimePickerComponent } from './time-picker/time-picker.component';
 import { TimePipe } from './time.pipe';
 import { GameScorePickerComponent } from './game-score-picker/game-score-picker.component';
 import { CalendarService } from './services/calendar.service';
+import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
+import { ProtocolComponent } from './protocol/protocol.component';
 
 
 @NgModule({
@@ -45,6 +47,8 @@ import { CalendarService } from './services/calendar.service';
     TimePickerComponent,
     TimePipe,
     GameScorePickerComponent,
+    DeleteDialogComponent,
+    ProtocolComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +62,7 @@ import { CalendarService } from './services/calendar.service';
     HttpClientModule,
   ],
   providers: [PlayerService,CalendarService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[DeleteDialogComponent]
 })
 export class AppModule { }
