@@ -1,0 +1,51 @@
+<div class="form-content mat-elevation-z2">
+  <div class="form-trainer mat-elevation-z4">
+    <div class="form-trainer-header">
+      <p>Заполните форму тренерского и руководящего состава</p>
+    </div>
+    <form [formGroup]="form" (ngSubmit)='onSubmitTrainersForm(form,formDirective)'>
+      <div class="form-trainer-body">
+        <div formGroupName="trainer">
+            <p>Тренер</p>
+            <mat-form-field style="width: 320px">
+              <input matInput placeholder="Имя" autocomplete="off" formControlName='name'>
+              <mat-hint *ngIf='trainerForm.get("trainer.name").touched'>Введите имя</mat-hint>
+            </mat-form-field>
+            <mat-form-field style="width: 320px">
+              <input matInput placeholder="Фамилия" autocomplete="off" formControlName='surname'>
+              <mat-hint *ngIf='trainerForm.get("trainer.surname").touched'>Введите фамилию</mat-hint>
+            </mat-form-field>
+        </div>
+        <div formGroupName="captain">
+            <p>Капитан</p>
+            <mat-form-field style="width: 320px">
+              <input matInput placeholder="Имя" autocomplete="off" formControlName='name'>
+              <mat-hint *ngIf='trainerForm.get("captain.name").touched'>Введите имя</mat-hint>
+            </mat-form-field>
+            <mat-form-field style="width: 320px">
+              <input matInput placeholder="Фамилия" autocomplete="off" formControlName='surname'>
+              <mat-hint *ngIf='trainerForm.get("captain.surname").touched'>Введите фамилию</mat-hint>
+            </mat-form-field>
+        </div>
+        <div formGroupName="viceCaptain">
+            <p>Вице-капитан</p>
+            <mat-form-field style="width: 320px">
+              <input matInput placeholder="Имя" autocomplete="off" formControlName='name'>
+              <mat-hint *ngIf='trainerForm.get("viceCaptain.name").touched'>Введите имя</mat-hint>
+            </mat-form-field>
+            <mat-form-field style="width: 320px">
+              <input matInput placeholder="Фамилия" autocomplete="off" formControlName='surname'>
+              <mat-hint *ngIf='trainerForm.get("viceCaptain.surname").touched'>Введите фамилию</mat-hint>
+            </mat-form-field>
+        </div>
+      
+        <button *ngIf="!id" [disabled]="trainerForm.invalid" mat-raised-button color="accent" type="submit">
+          <mat-icon style="font-size: 20px">add_circle_outline</mat-icon> Добавить игрока
+        </button>
+        <button *ngIf="id" [disabled]="trainerForm.invalid" mat-raised-button color="accent" type="submit">
+          <mat-icon style="font-size: 20px">edit</mat-icon> Сохранить изменения
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

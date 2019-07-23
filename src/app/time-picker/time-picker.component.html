@@ -1,27 +1,26 @@
 <div class="time-picker">
-    <p>Выберите время:   </p>
+    <p>Выберите время: </p>
     <div class="time-container">
         <div class="half-time-picker">
-            <button class="minus-button" type="button" (click)="minusHour($event)">
+            <button mat-button style="width: 5px" class="minus-button" type="button" (click)="minusHour($event)">
                 <mat-icon color="accent" style="width: 24px; height: 24px;">keyboard_arrow_down</mat-icon>
             </button>
-            <input type="number" class="picker" readonly (wheel)="changeHourScroll($event)" min="0" max="23"
-                 value="12" >
-            <button class="plus-button" type="button" (click)="plusHour($event)">
+            <input type="number" class="picker" readonly [ngModel]="inputHour" (wheel)="changeHourScroll($event)"
+                min="0" max="23">
+            <button mat-button style="width: 5px" class="plus-button" type="button" (click)="plusHour($event)">
                 <mat-icon color="accent" style="width: 24px; height: 24px;">keyboard_arrow_up</mat-icon>
             </button>
         </div>
         <span>:</span>
         <div class="half-time-picker">
-            <button class="minus-button" type="button" (click)="minusMinute($event)">
+            <button mat-button class="minus-button" type="button" (click)="minusMinute($event)">
                 <mat-icon color="accent" style="width: 24px; height: 24px;">keyboard_arrow_down</mat-icon>
             </button>
-            <input type="number" class="picker" readonly (wheel)="changeMinuteScroll($event)" min="0" max="59"
-                 value="30">
-            <button class="plus-button" type="button" (click)="plusMinute($event)">
+            <input type="number" class="picker"  [ngModel]="inputMinute" (wheel)="changeMinuteScroll($event)"
+                min="0" max="59">
+            <button mat-button class="plus-button" type="button" (click)="plusMinute($event)">
                 <mat-icon color="accent" style="width: 24px; height: 24px;">keyboard_arrow_up</mat-icon>
             </button>
         </div>
     </div>
-    <button (click)="addTime()"></button>
 </div>

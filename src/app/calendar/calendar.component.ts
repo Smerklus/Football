@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild, LOCALE_ID } from '@angular/core';
 import { MatTableDataSource, MatSort, MatTable, MatDialog } from '@angular/material';
 import { CalendarMatch } from '../models/calendar-match.model';
 import { CalendarService } from '../services/calendar.service';
-import { TeamType } from '../models/team-type';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
+import { TeamType } from '../models/team-type.model';
 export interface MatchType {
   value: string;
   viewValue: string;
@@ -27,24 +27,9 @@ export class CalendarComponent implements OnInit {
     { value: 'balt-avto', viewValue: 'БАЛТ АВТО' }
   ];
 
-  calendarMatches: CalendarMatch[] = [
-    {
-      data: "2019-07-01T21:00:00.000Z",
-      time: "12:30",
-      oponent: "Перу",
-      score: "1:3",
-      "id": 14
-    },
-    {
-      data: "2019-07-06T21:00:00.000Z",
-      time: "12:40",
-      oponent: "Авто",
-      score: "1:2",
-      "id": 15
-    }
-  ];
-
-  displayedColumns: string[] = ['data', 'time', 'oponent', 'score', 'delete'];
+  calendarMatches: CalendarMatch[] = [];
+  
+  displayedColumns: string[] = ['edit','date', 'time', 'oponent', 'score', 'delete'];
   dataSource: MatTableDataSource<CalendarMatch>;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -53,6 +38,7 @@ export class CalendarComponent implements OnInit {
 
   teams = [];
   teamsSet;
+  checked;
 
   constructor(public calendarService: CalendarService, public dialog: MatDialog) {
     calendarService.getCalendarMatches().subscribe(x => {
@@ -109,5 +95,11 @@ export class CalendarComponent implements OnInit {
       this.sortTeams();
       this.setDataSource(this.calendarMatches);
     });
+  }
+  editOn(checked){
+    // this.displayedColumns = ['edit','date', 'time', 'oponent', 'score', 'delete'];
+    this.checked = checked;
+    
+    console.log(checked);
   }
 }

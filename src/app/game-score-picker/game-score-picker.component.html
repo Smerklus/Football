@@ -1,12 +1,12 @@
 <div class="game-score-picker">
-    <p>Выберите счет:   </p>
+    <p>Выберите счет: </p>
     <div class="score-container">
         <div class="half-score-picker">
             <button class="minus-button" type="button" (click)="minusFirstScore($event)">
                 <mat-icon color="accent" style="width: 24px; height: 24px;">keyboard_arrow_down</mat-icon>
             </button>
-            <input type="number" class="picker" readonly (wheel)="changeScoreScroll($event)" min="0" max="50"
-                placeholder="Введите время" value="0">
+            <input type="number" class="picker" readonly [ngModel]="firstScore" (wheel)="changeScoreScroll($event)"
+                min="0" max="50">
             <button class="plus-button" type="button" (click)="plusFirstScore($event)">
                 <mat-icon color="accent" style="width: 24px; height: 24px;">keyboard_arrow_up</mat-icon>
             </button>
@@ -16,12 +16,14 @@
             <button class="minus-button" type="button" (click)="minusSecondScore($event)">
                 <mat-icon color="accent" style="width: 24px; height: 24px;">keyboard_arrow_down</mat-icon>
             </button>
-            <input type="number" class="picker" readonly (wheel)="changeScoreScroll($event)" min="0" max="50"
-                placeholder="Введите время" value="0">
+            <input type="number" class="picker" readonly [ngModel]="secondScore" (wheel)="changeScoreScroll($event)"
+                min="0" max="50">
             <button class="plus-button" type="button" (click)="plusSecondScore($event)">
                 <mat-icon color="accent" style="width: 24px; height: 24px;">keyboard_arrow_up</mat-icon>
             </button>
         </div>
     </div>
-    <button (click)="addScore()"></button>
+    <button mat-button color="accent" (click)="deleteScore()"  title="Убрать счет">
+        <mat-icon>clear</mat-icon>
+    </button>
 </div>

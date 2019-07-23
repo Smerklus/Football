@@ -11,7 +11,7 @@ import { TeamComponent } from './team/team.component';
 import { Routes, RouterModule } from '@angular/router';
 import { MainComponent } from './main/main.component';
 import { ControlComponent } from './control/control.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CalendarComponent } from './calendar/calendar.component';
 import { StatisticComponent } from './statistic/statistic.component';
 import { MatchCompositionComponent } from './statistic/match-composition/match-composition.component';
@@ -28,6 +28,8 @@ import { GameScorePickerComponent } from './game-score-picker/game-score-picker.
 import { CalendarService } from './services/calendar.service';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import { ProtocolComponent } from './protocol/protocol.component';
+import { DeleteDialogPlayerComponent } from './delete-dialog-player/delete-dialog-player.component';
+import { TrainersControlComponent } from './trainers-control/trainers-control.component';
 
 
 @NgModule({
@@ -49,6 +51,8 @@ import { ProtocolComponent } from './protocol/protocol.component';
     GameScorePickerComponent,
     DeleteDialogComponent,
     ProtocolComponent,
+    DeleteDialogPlayerComponent,
+    TrainersControlComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,11 +62,12 @@ import { ProtocolComponent } from './protocol/protocol.component';
     MatFormFieldModule,
     MaterialModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule,
     HttpClientModule,
   ],
   providers: [PlayerService,CalendarService],
   bootstrap: [AppComponent],
-  entryComponents:[DeleteDialogComponent]
+  entryComponents:[DeleteDialogComponent,DeleteDialogPlayerComponent]
 })
 export class AppModule { }

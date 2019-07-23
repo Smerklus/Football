@@ -18,14 +18,15 @@
           </mat-expansion-panel-header>
 
           <!-- Форма выбора даты -->
-          <mat-form-field>
-            <input matInput [matDatepicker]="picker" placeholder="Выберите дату игры" [(ngModel)]='inputData'>
+          <mat-form-field class="date-match">
+            <input matInput [matDatepicker]="picker" (dateChange)="compareDate()" placeholder="Выберите дату игры"
+              [(ngModel)]='inputDate'>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
 
           <!-- Форма выбора времени -->
-          <app-time-picker (onAddTime)="updateTime($event)"></app-time-picker>
+          <app-time-picker (inputTimeChange)="updateTime($event)" [inputTime]="inputTime"></app-time-picker>
           <br>
           <!-- Форма выбора команды соперника -->
           <mat-form-field style="width: 218px">
@@ -33,7 +34,7 @@
           </mat-form-field>
 
           <!-- Форма выбора итогового счета матча -->
-          <app-game-score-picker (onAddScore)="updateScore($event)"></app-game-score-picker>
+          <app-game-score-picker *ngIf="isPastDate" (onAddScore)="updateScore($event)" [inputScore]="inputScore"></app-game-score-picker>
 
           <mat-action-row>
             <button mat-button color="primary" (click)="nextStep()">Next</button>
@@ -51,7 +52,7 @@
               <mat-icon>people</mat-icon>
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <mat-tab-group >
+          <mat-tab-group>
             <mat-tab label="РИВ ГОШ">
               <div class="main-team-all-purpose">
                 <h3>Универсалы</h3>
@@ -95,9 +96,15 @@
         </mat-expansion-panel>
       </mat-accordion>
     </div>
-    <div class="form-bottom">
+    <div class="form-bottom" *ngIf="!id">
       <button mat-raised-button color="accent" (click)="addCalendarMatch()">
         <mat-icon style="font-size: 20px">add_circle_outline</mat-icon> Добавить данные о матче
+      </button>
+    </div>
+
+    <div class="form-bottom" *ngIf="id">
+      <button mat-raised-button color="accent" (click)="editCalendarMatch()">
+        <mat-icon style="font-size: 20px">add_circle_outline</mat-icon> Сохранить изменения
       </button>
     </div>
 

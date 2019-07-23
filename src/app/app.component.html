@@ -1,16 +1,19 @@
-<div class="intro">
-  <div class="main-title" [routerLink]="['/']"> Футбольный клуб РИВ ГОШ
-    <img class="logo" src="https://img.nagradion.ru/images/bf300x500/shields/BGXN2zMV.png?1563090140" alt="">
+<!-- <div class="intro"> -->
+  <div class="header-container mat-elevation-z8">
+    <div class="main-title" [routerLink]="['/']"> Футбольный клуб РИВ ГОШ
+      <img class="logo" src="https://img.nagradion.ru/images/bf300x500/shields/BGXN2zMV.png?1563090140" alt="">
+    </div>
+      <div class="nav-bar">
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+      <mat-button-toggle value="news" [routerLink]="['']" color="accent">Новости</mat-button-toggle>
+      <mat-button-toggle value="teams" [routerLink]="['/team']">Команды</mat-button-toggle>
+      <mat-button-toggle value="calendar" [routerLink]="['/calendar']">Календарь</mat-button-toggle>
+      <mat-button-toggle value="statistic" [routerLink]="['/statistic']">Статистика</mat-button-toggle>
+      <mat-button-toggle value="contacts" [routerLink]="['']">Контакты</mat-button-toggle>
+    </mat-button-toggle-group>
   </div>
-  <!-- <div class="content"> -->
-      <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-          <mat-button-toggle value="news" [routerLink]="['']" color="accent">Новости</mat-button-toggle>
-          <mat-button-toggle value="teams" [routerLink]="['/team']">Команды</mat-button-toggle>
-          <mat-button-toggle value="calendar" [routerLink]="['/calendar']">Календарь</mat-button-toggle>
-          <mat-button-toggle value="statistic" [routerLink]="['/statistic']">Статистика</mat-button-toggle>
-          <mat-button-toggle value="contacts" [routerLink]="['']">Контакты</mat-button-toggle>
-        </mat-button-toggle-group>
-<div class="container-content">
-  <router-outlet></router-outlet>
-</div>
-</div>
+  </div>
+  <div class="container-content">
+    <router-outlet></router-outlet>
+  </div>
+<!-- </div> -->

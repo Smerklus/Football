@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, AfterViewInit, AfterViewChecked, DoCheck, OnChanges } from '@angular/core';
 import { TimePipe } from '../time.pipe';
 
 @Component({
@@ -6,16 +6,17 @@ import { TimePipe } from '../time.pipe';
   templateUrl: './time-picker.component.html',
   styleUrls: ['./time-picker.component.scss']
 })
-export class TimePickerComponent implements OnInit {
+export class TimePickerComponent implements OnChanges, OnInit, DoCheck {
 
-  inputHour: number = 12;
-  inputMinute: number = 30;
+  inputHour;
+  inputMinute;
   time;
 
+  @Input() inputTime: string;
+  @Output() inputTimeChange = new EventEmitter<string>();
 
-  @Output() onAddTime = new EventEmitter<string>();
-
-  constructor() { }
+  constructor() {
+  }
 
 
 
@@ -28,7 +29,7 @@ export class TimePickerComponent implements OnInit {
     }
     scrollEvent.path[0].value = scrollEvent.path[0].value.padStart(2, "0")
     this.inputHour = scrollEvent.path[0].value;
-    this.time = this.inputHour + ":" + this.inputMinute;
+    this.addTime();
   }
 
   changeMinuteScroll(scrollEvent) {
@@ -40,7 +41,7 @@ export class TimePickerComponent implements OnInit {
     }
     scrollEvent.path[0].value = scrollEvent.path[0].value.padStart(2, "0")
     this.inputMinute = scrollEvent.path[0].value;
-    this.time = this.inputHour + ":" + this.inputMinute;
+    this.addTime();
   }
 
   minusHour(hour) {
@@ -49,8 +50,7 @@ export class TimePickerComponent implements OnInit {
     }
     hour.path[0].nextElementSibling.value = hour.path[0].nextElementSibling.value.padStart(2, "0")
     this.inputHour = hour.path[0].nextElementSibling.value
-    this.time = this.inputHour + ":" + this.inputMinute;
-
+    this.addTime();
   }
   plusHour(hour) {
     if (hour.path[0].previousElementSibling.value < 23) {
@@ -58,8 +58,7 @@ export class TimePickerComponent implements OnInit {
     }
     hour.path[0].previousElementSibling.value = hour.path[0].previousElementSibling.value.padStart(2, "0")
     this.inputHour = hour.path[0].previousElementSibling.value
-    this.time = this.inputHour + ":" + this.inputMinute;
-
+    this.addTime();
   }
   minusMinute(hour) {
     if (hour.path[0].nextElementSibling.value > 0) {
@@ -67,8 +66,7 @@ export class TimePickerComponent implements OnInit {
     }
     hour.path[0].nextElementSibling.value = hour.path[0].nextElementSibling.value.padStart(2, "0")
     this.inputMinute = hour.path[0].nextElementSibling.value
-    this.time = this.inputHour + ":" + this.inputMinute;
-
+    this.addTime();
   }
   plusMinute(hour) {
     if (hour.path[0].previousElementSibling.value < 59) {
@@ -76,18 +74,35 @@ export class TimePickerComponent implements OnInit {
     }
     hour.path[0].previousElementSibling.value = hour.path[0].previousElementSibling.value.padStart(2, "0")
     this.inputMinute = hour.path[0].previousElementSibling.value
-    this.time = this.inputHour + ":" + this.inputMinute;
-    console.log(this.time)
+    
+    this.addTime();
 
   }
-
+  getTime() {
+    console.log(this.inputTime)
+    if (this.inputTime){
+    this.inputHour = +this.inputTime.split(":")[0];
+    this.inputMinute = +this.inputTime.split(":")[1];
+    }
+  }
   addTime() {
     this.time = this.inputHour + ":" + this.inputMinute;
     console.log(this.time);
-    this.onAddTime.emit(this.time)
+    this.inputTimeChange.emit(this.time)
   }
 
+ngOnChanges(){
+  this.getTime();
+  this.addTime();
+
+}
+
   ngOnInit() {
+
+  }
+
+  ngDoCheck(){
+
   }
 
 }

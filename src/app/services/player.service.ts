@@ -18,4 +18,10 @@ export class PlayerService{
     deletePlayer(id){
         return this.http.delete('http://localhost:3000/players/'+id)
     }
+    putPlayerById(id,player){
+        return this.http.put('http://localhost:3000/players/'+id,player)
+    }
+    getPlayerById(id){
+        return this.http.get('http://localhost:3000/players/'+id)
+    }
 }

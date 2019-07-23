@@ -12,6 +12,7 @@ import { RedCardComponent } from './statistic/red-card/red-card.component';
 import { YellowCardComponent } from './statistic/yellow-card/yellow-card.component';
 import { EditCalendarComponent } from './calendar/edit-calendar/edit-calendar.component';
 import { ProtocolComponent } from './protocol/protocol.component';
+import { TrainersControlComponent } from './trainers-control/trainers-control.component';
 
 const statisticRoutes: Routes = [
   { path: 'match_composition', component: MatchCompositionComponent },
@@ -23,8 +24,11 @@ const statisticRoutes: Routes = [
 
 const appRoutes: Routes = [
   { path: 'team', component: TeamComponent },
+  { path: 'trainers_panel', component: TrainersControlComponent },
   { path: 'control_panel', component: ControlComponent },
+  { path: 'control_panel/:id', component: ControlComponent },
   { path: 'calendar', component: CalendarComponent },
+  { path: 'edit_calendar/:id', component: EditCalendarComponent },
   { path: 'edit_calendar', component: EditCalendarComponent },
   { path: 'protocol/:id', component: ProtocolComponent },
   { path: 'statistic', component: StatisticComponent, children: statisticRoutes },

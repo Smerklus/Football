@@ -4,20 +4,37 @@ $primary-light-color: #b0ff57;
 $secondary-color: #ff4081;
 $secondary-dark-color: #c60055;
 $secondary-light-color: #ff79b0;
-
-.mat-button-toggle{
+.mat-header-row{
+.mat-sort-header-container {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+}
+.mat-button-toggle {
   background: $primary-light-color;
+  width: 150px;
 }
 .mat-button-toggle-checked {
-background: $primary-color;
+  background: $primary-color;
 }
-mat-button-toggle-group{
+  
+mat-button-toggle-group {
   display: flex;
-    justify-content: space-evenly;
-    width: -webkit-fill-available;
-    background: $primary-light-color;
+  justify-content: center;
+  width: -webkit-fill-available;
+  background: $primary-light-color;
 }
-
+.header-container {
+  overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+  // box-shadow: 0 5px 10px rgba(0, 0, 0, 0.35);
+}
 .intro {
   // background:#d6d4d4;
   margin-left: auto;
@@ -28,30 +45,10 @@ mat-button-toggle-group{
 .logo {
   padding-left: 20px;
   height: 50px;
-    width: 50px;
-}
-.main-nav-bar {
-  a{
-    &:active{
-      text-decoration: none;
-    outline: none;
-    color: none;
-    }
-    text-decoration: none;
-    outline: none;
-  }
-  border-collapse: collapse;
-  width: 100%;
-  height: 50px;
-  text-align: center;
-}
-.menu-nav{
-  height: inherit;
-  background:$primary-color;
-
+  width: 50px;
 }
 .main-title {
-  &:focus{
+  &:focus {
     text-decoration: none;
     outline: none;
   }
@@ -68,33 +65,14 @@ mat-button-toggle-group{
   color: black;
   cursor: pointer;
 }
-
-ul {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  margin: 0%;
-  padding: 0%;
+.nav-bar {
+  font-size: 14px;
+  font-weight: 500;
 }
-li {
-  a {
-    text-decoration-line: none;
-    font-size: 19px;
-    color: black;
-  }
-  font-family: "Lobster", cursive;
-  display: block;
-  font-size: 40px;
-  color: #fcfcfc;
-}
-.container {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-.content {
-  display: flex;
-}
-.container-content{
-  margin-top: 30px;
+.container-content {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
 }
