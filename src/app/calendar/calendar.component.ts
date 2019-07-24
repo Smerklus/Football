@@ -40,7 +40,7 @@ export class CalendarComponent implements OnInit {
   
   displayedColumns: string[] = ['edit','date', 'time', 'oponent', 'score', 'delete'];
   dataSource: MatTableDataSource<CalendarMatch>;
-  expendedElement: CalendarMatch | null;
+  expandedElement: CalendarMatch | null;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
