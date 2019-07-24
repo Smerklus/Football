@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
+import { TrainerService } from '../services/trainers.service';
+import { Trainer } from '../models/trainer.model';
+import { ActivatedRoute } from '@angular/router';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-trainers-control',
@@ -9,8 +13,34 @@ import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular
 export class TrainersControlComponent implements OnInit {
 
   form: FormGroup;
+  trainers: Trainer[];
+  id;
+  trainer;
+  constructor(public trainerApi: TrainerService, public activatedRoute: ActivatedRoute) {
 
-  constructor() { }
+    // trainerApi.getTrainers().subscribe(x => this.trainers = x)
+    // activatedRoute.paramMap.subscribe(x => {
+
+    //   this.id = x.get('id');
+    //   if (this.id) {
+    //     this.trainerApi.getTrainerById(this.id).subscribe(x => {
+    //       this.trainer = x;
+
+    //       if (this.trainer) {
+    //         this.form.patchValue({
+    //           name: this.player.name,
+    //           surname: this.player.surname,
+    //           role: this.roles.find(z => z.value == this.player.role.value),
+    //           teamType: this.teamTypes.find(z => z.value == this.player.teamType.value),
+    //           number: this.player.number
+    //         });
+    //         // this.teamType=this.playerForm.value.teamType.value;
+    //         console.log(this.playerForm)
+    //       };
+    //     });
+    //   };
+    // })
+  }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -28,46 +58,62 @@ export class TrainersControlComponent implements OnInit {
       })
     })
 
-}
+  }
 
-onSubmitPlayerForm(formData: any, formDirective: FormGroupDirective) {
-  // if (this.id) {
+  onSubmitForm(formData: any, formDirective: FormGroupDirective) {
+    // if (this.id) {
 
-  //   this.playerApi.putPlayerById(
-  //     this.id,
-  //     {
-  //       name: this.playerForm.value.name,
-  //       surname: this.playerForm.value.surname,
-  //       role: this.playerForm.value.role,
-  //       teamType: this.playerForm.value.teamType,
-  //       number: this.playerForm.value.number,
-  //     }).subscribe(x => {
-  //       this.playerApi.getPlayers().subscribe(x => this.players = x);
-  //       this.table.renderRows();
-  //       console.log(this.playerForm)
-  //       formDirective.resetForm();
-  //       this.playerForm.reset();
-  //       console.log(this.players)
-  //     })
-  // }
-  // else {
-  //   this.playerApi.postPlayer(
-  //     {
-  //       name: this.playerForm.value.name,
-  //       surname: this.playerForm.value.surname,
-  //       role: this.playerForm.value.role,
-  //       teamType: this.playerForm.value.teamType,
-  //       number: this.playerForm.value.number,
-  //     }).subscribe(x => {
-  //       this.players.push(x)
-  //       this.table.renderRows();
-  //       console.log(this.playerForm)
-  //       formDirective.resetForm();
-  //       this.playerForm.reset();
-  //       console.log(this.players)
-  //     })
-  // }
-console.log(this.form)
-}
+    //   this.trainerApi.putTrainerById(
+    //     this.id,
+    //     {
+    //       name: this.form.value.name,
+    //       surname: this.form.value.surname,
+    //       role: this.form.value.role,
+    //       teamType: this.form.value.teamType,
+    //       number: this.form.value.number,
+    //     }).subscribe(x => {
+    //       this.trainer.getPlayers().subscribe(x => this.trainers = x);
+    //       // this.table.renderRows();
+    //       console.log(this.form)
+    //       formDirective.resetForm();
+    //       this.form.reset();
+    //       console.log(this.trainers)
+    //     })
+    // }
+    // else {
+      forkJoin(
+        this.trainerApi.postTrainer(
+          {
+            name: this.form.value.trainer.name,
+            surname: this.form.value.trainer.surname,
+            position: 'Тренер',
+            teamType: { "value": "main", "viewValue": "РИВ ГОШ" },
+          }),
+        this.trainerApi.postTrainer(
+          {
+            name: this.form.value.captain.name,
+            surname: this.form.value.captain.surname,
+            position: 'Капитан',
+            teamType: { "value": "main", "viewValue": "РИВ ГОШ" },
+          }),
+        this.trainerApi.postTrainer(
+          {
+            name: this.form.value.viceCaptain.name,
+            surname: this.form.value.viceCaptain.surname,
+            position: 'Вице-капитан',
+            teamType: { "value": "main", "viewValue": "РИВ ГОШ" },
+          })
+      )
+    .subscribe(([res1,res2,res3]) => {
+        // this.trainers.push(x)
+        // // this.table.renderRows();
+        // console.log(this.form)
+        formDirective.resetForm();
+        this.form.reset();
+        console.log(this.trainers)
+      })
+    // }
+    console.log(this.form)
+  }
 
 }

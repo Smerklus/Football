@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MaterialModule } from './material.module';
@@ -30,6 +30,7 @@ import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import { ProtocolComponent } from './protocol/protocol.component';
 import { DeleteDialogPlayerComponent } from './delete-dialog-player/delete-dialog-player.component';
 import { TrainersControlComponent } from './trainers-control/trainers-control.component';
+import { TrainerService } from './services/trainers.service';
 
 
 @NgModule({
@@ -65,8 +66,10 @@ import { TrainersControlComponent } from './trainers-control/trainers-control.co
     ReactiveFormsModule,
     RouterModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    NoopAnimationsModule,
   ],
-  providers: [PlayerService,CalendarService],
+  providers: [PlayerService,CalendarService,TrainerService],
   bootstrap: [AppComponent],
   entryComponents:[DeleteDialogComponent,DeleteDialogPlayerComponent]
 })

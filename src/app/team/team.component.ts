@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { PlayerService } from '../services/player.service';
 import { Player } from '../models/player.model';
 import { MatSort, MatTableDataSource } from '@angular/material';
+import { TrainerService } from '../services/trainers.service';
+import { Trainer } from '../models/trainer.model';
 
 @Component({
   selector: 'app-team',
@@ -14,13 +16,14 @@ export class TeamComponent implements OnInit {
   displayedColumns: string[] = ['count', 'name', 'surname', 'role', 'number'];
   dataCountMainPlayers = [];
   dataCountDPlayers = [];
+  trainers: Trainer[];
 
 
   dataMainPlayersSource: MatTableDataSource<Player>;
   dataDPlayersSource: MatTableDataSource<Player>;
   @ViewChild('MatSortMain', { static: true }) sortMain: MatSort;
   @ViewChild('MatSortD', { static: true }) sortD: MatSort;
-  constructor(public playerApi: PlayerService) {
+  constructor(public playerApi: PlayerService, public trainerApi: TrainerService) {
     playerApi.getPlayers().subscribe(x => {
       this.players = x;
       this.dataCountMainPlayers = this.players.filter(player => player.teamType.value == "main"
@@ -36,6 +39,9 @@ export class TeamComponent implements OnInit {
       this.setDataDPlayersSource(this.dataCountDPlayers)
       console.log(this.dataMainPlayersSource)
       console.log(this.dataDPlayersSource)
+    });
+    trainerApi.getTrainers().subscribe(z=>{
+      this.trainers = z;
     })
   }
   ngOnInit() {

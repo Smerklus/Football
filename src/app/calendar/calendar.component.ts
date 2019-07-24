@@ -4,6 +4,7 @@ import { CalendarMatch } from '../models/calendar-match.model';
 import { CalendarService } from '../services/calendar.service';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { TeamType } from '../models/team-type.model';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 export interface MatchType {
   value: string;
   viewValue: string;
@@ -12,6 +13,14 @@ export interface MatchType {
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      // transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class CalendarComponent implements OnInit {
 
@@ -31,6 +40,7 @@ export class CalendarComponent implements OnInit {
   
   displayedColumns: string[] = ['edit','date', 'time', 'oponent', 'score', 'delete'];
   dataSource: MatTableDataSource<CalendarMatch>;
+  expendedElement: CalendarMatch | null;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 

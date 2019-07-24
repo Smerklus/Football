@@ -11,11 +11,29 @@
           </div>
           <div class="table-trainers-body">
             <mat-list>
-              <mat-list-item>Тренер</mat-list-item>
+              <mat-list-item>Тренер:
+                <div *ngFor="let trainer of trainers">
+                  <div *ngIf="trainer.position == 'Тренер'">
+                    {{trainer.name}} {{trainer.surname}}
+                  </div>
+                </div>
+              </mat-list-item>
               <mat-divider></mat-divider>
-              <mat-list-item>Капитан</mat-list-item>
+              <mat-list-item>Капитан 
+                  <div *ngFor="let trainer of trainers">
+                      <div *ngIf="trainer.position == 'Капитан'">
+                        {{trainer.name}}{{trainer.surname}}
+                      </div>
+                    </div>
+              </mat-list-item>
               <mat-divider></mat-divider>
-              <mat-list-item>Вице-капитан</mat-list-item>
+              <mat-list-item>Вице-капитан
+                  <div *ngFor="let trainer of trainers">
+                      <div *ngIf="trainer.position == 'Вице-капитан'">
+                        {{trainer.name}}{{trainer.surname}}
+                      </div>
+                    </div>
+              </mat-list-item>
             </mat-list>
           </div>
         </div>
@@ -27,7 +45,8 @@
             </button>
           </div>
           <div class="table-players-body">
-            <table mat-table #MatSortMain='matSort' [dataSource]="dataMainPlayersSource" matSort class="mat-elevation-z8">
+            <table mat-table #MatSortMain='matSort' [dataSource]="dataMainPlayersSource" matSort
+              class="mat-elevation-z8">
 
               <ng-container matColumnDef="count">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>№</th>
@@ -80,7 +99,7 @@
               <mat-list-item>Вице-капитан</mat-list-item>
             </mat-list>
           </div>
-      </div>
+        </div>
 
         <div class="table-players-container mat-elevation-z4">
           <div class="table-container-header">
@@ -123,7 +142,7 @@
           </div>
         </div>
       </div>
-</mat-tab>
-</mat-tab-group>
+    </mat-tab>
+  </mat-tab-group>
 
 </div>

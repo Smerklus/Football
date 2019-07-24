@@ -41,6 +41,38 @@
       "id": 22
     }
   ],
+  "trainers": [
+    {
+      "name": "Иван",
+      "surname": "Петров",
+      "position": "Тренер",
+      "teamType": {
+        "value": "main",
+        "viewValue": "РИВ ГОШ"
+      },
+      "id": 1
+    },
+    {
+      "name": "Иван",
+      "surname": "Иванов",
+      "position": "Вице-капитан",
+      "teamType": {
+        "value": "main",
+        "viewValue": "РИВ ГОШ"
+      },
+      "id": 2
+    },
+    {
+      "name": "Иван",
+      "surname": "Сидоров",
+      "position": "Капитан",
+      "teamType": {
+        "value": "main",
+        "viewValue": "РИВ ГОШ"
+      },
+      "id": 3
+    }
+  ],
   "players": [
     {
       "name": "Антон",
