@@ -2,15 +2,19 @@ import { Component, OnInit, ViewChild, OnChanges } from '@angular/core';
 import { TimePickerComponent } from 'src/app/time-picker/time-picker.component';
 import { CalendarService } from 'src/app/services/calendar.service';
 import { CalendarMatch } from 'src/app/models/calendar-match.model';
-import { MatTable } from '@angular/material';
+import { MatTable, MAT_CHECKBOX_CLICK_ACTION } from '@angular/material';
 import { PlayerService } from 'src/app/services/player.service';
 import { Player } from 'src/app/models/player.model';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { FormGroup, FormControl, Validators, FormGroupDirective, FormArray, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-calendar',
   templateUrl: './edit-calendar.component.html',
-  styleUrls: ['./edit-calendar.component.scss']
+  styleUrls: ['./edit-calendar.component.scss'],
+  // providers: [
+  //   {provide: MAT_CHECKBOX_CLICK_ACTION, useValue: 'noop'}
+  // ]
 })
 export class EditCalendarComponent implements OnChanges, OnInit {
 
@@ -20,6 +24,7 @@ export class EditCalendarComponent implements OnChanges, OnInit {
   inputScore;
   calendarMatches: CalendarMatch[] = [];
   players: Player[] = [];
+  mainAllPurpose: Player[] = [];
   teamType;
   step = 0;
   isPastDate;
@@ -28,27 +33,48 @@ export class EditCalendarComponent implements OnChanges, OnInit {
   outputTime;
   outputScore;
   todayDate;
+  calendarForm: FormGroup;
+  isChecked;
+  inputChecked;
+  indexSamePlayer;
+
+  tape = [null, true];
+
+  done = null;
+
+  doneControl = new FormControl(null);
+
   @ViewChild(MatTable, { static: false }) table: MatTable<any>;
 
-  constructor(public calendarApi: CalendarService, public playerApi: PlayerService, public activatedRoute: ActivatedRoute, public route: Router) {
-    this.id = activatedRoute.snapshot.params['id'];
-    if(this.id){
-    calendarApi.getMatchById(this.id).subscribe(x => {
-      this.currentMatch = x;
+  constructor(public calendarApi: CalendarService, public playerApi: PlayerService, public activatedRoute: ActivatedRoute, public route: Router, public fb: FormBuilder) {
+    playerApi.getPlayers().subscribe(x => this.players = x);
+    activatedRoute.paramMap.subscribe(x => {
 
-      if (this.currentMatch) {
-        this.inputTime = this.currentMatch.time;
-        this.inputDate = this.currentMatch.date;
-        this.inputOponent = this.currentMatch.oponent;
-        this.inputScore = this.currentMatch.score;
-        this.isPastDate = new Date(this.inputDate) < new Date;
+      this.id = x.get('id');
+      if (this.id) {
+        calendarApi.getMatchById(this.id).subscribe(x => {
+          this.currentMatch = x;
 
-      };
-    });
-  }
-      playerApi.getPlayers().subscribe(x => this.players = x);
-    
+          if (this.currentMatch) {
+            this.inputScore = this.currentMatch.score;
+            this.inputTime = this.currentMatch.time;
+            this.isPastDate = new Date(this.currentMatch.date) < new Date;
+            this.mainAllPurpose = this.currentMatch.composition;
+            this.calendarForm.patchValue({
+              calendarData: {
+                date: this.currentMatch.date,
+                oponent: this.currentMatch.oponent,
+              },
+            });
 
+            console.log(this.calendarForm)
+          };
+        });
+      }
+
+
+
+    })
   }
 
   chooseMainTeam(value) {
@@ -74,46 +100,129 @@ export class EditCalendarComponent implements OnChanges, OnInit {
     this.outputScore = score;
   }
 
-  addCalendarMatch() {
-    this.calendarApi.postCalendarMatch(
-      {
-        date: this.inputDate,
-        time: this.outputTime,
-        oponent: this.inputOponent,
-        score: this.outputScore,
-      }).subscribe(x => {
-        this.calendarMatches.push(x)
-        console.log(this.calendarMatches)
-        this.route.navigate(['/calendar'])
-      })
-      
-  };
-  editCalendarMatch() {
-    this.calendarApi.putMatchById(this.id, 
-      {
-        date: this.inputDate,
-        time: this.outputTime,
-        oponent: this.inputOponent,
-        score: this.outputScore,
-      })
-      .subscribe(x=>{
-      //   x => {
-      //   this.calendarMatches.push(x)
-      //   console.log(this.calendarMatches)
-      // }
-      this.route.navigate(['/calendar'])
-      }
-      )
-      
-  };
+  // addCalendarMatch() {
+  //   this.calendarApi.postCalendarMatch(
+  //     {
+  //       date: this.inputDate,
+  //       time: this.outputTime,
+  //       oponent: this.inputOponent,
+  //       score: this.outputScore,
+  //     }).subscribe(x => {
+  //       this.calendarMatches.push(x)
+  //       console.log(this.calendarMatches)
+  //       this.route.navigate(['/calendar'])
+  //     })
+
+  // };
+
+  onSubmitForm(formData: any, formDirective: FormGroupDirective) {
+    if (this.id) {
+
+      this.calendarApi.putMatchById(
+        this.id,
+        {
+          date: this.calendarForm.value.calendarData.date,
+          time: this.outputTime,
+          oponent: this.calendarForm.value.calendarData.oponent,
+          score: this.outputScore,
+          composition: this.mainAllPurpose,
+        }).subscribe(x => {
+          console.log(this.calendarForm)
+          formDirective.resetForm();
+          this.calendarForm.reset();
+          this.route.navigate(['/calendar'])
+
+        })
+    }
+    else {
+      this.calendarApi.postCalendarMatch(
+        {
+          date: this.calendarForm.value.calendarData.date,
+          time: this.outputTime,
+          oponent: this.calendarForm.value.calendarData.oponent,
+          score: this.outputScore,
+          composition: this.mainAllPurpose,
+        }).subscribe(x => {
+          console.log(this.calendarForm)
+          // formDirective.resetForm();
+          // this.calendarForm.reset();
+        })
+    }
+
+  }
+
+  // editCalendarMatch() {
+  //   this.calendarApi.putMatchById(this.id, 
+  //     {
+  //       date: this.inputDate,
+  //       time: this.outputTime,
+  //       oponent: this.inputOponent,
+  //       score: this.outputScore,
+  //     })
+  //     .subscribe(x=>{
+  //     //   x => {
+  //     //   this.calendarMatches.push(x)
+  //     //   console.log(this.calendarMatches)
+  //     // }
+  //     this.route.navigate(['/calendar'])
+  //     }
+  //     )
+
+  // };
 
   ngOnChanges() {
   }
 
   ngOnInit() {
+    // this.calendarForm = this.fb.group({
+    //   date:this.fb.control({}),
+    //   oponent:this.fb.control({}),
+    //   composition:this.fb.array([])
+    // })
+
+
+    this.calendarForm = new FormGroup({
+      calendarData: new FormGroup({
+        date: new FormControl('', Validators.required),
+        oponent: new FormControl('', Validators.required),
+      }),
+      compositionData: new FormGroup({
+        composition: new FormControl({})
+      })
+    });
+  }
+
+  compareDate() {
+    this.isPastDate = new Date(this.calendarForm.value.calendarData.date) < new Date;
+  }
+
+  //   addMainAllPurpose(player){
+  // this.mainAllPurpose.push({player,this.isChecked})
+
+  // console.log(player)
+  // console.log(this.mainAllPurpose)
+  // console.log(this.calendarForm)
+
+  //   }
+  onChange(event, player) {
+    console.log(event)
+    console.log(player)
+    if (event.checked) {
+      if (!this.mainAllPurpose) {
+        this.mainAllPurpose = [];
+      }
+      this.mainAllPurpose.push(player)
+    } else {
+      let indexSamePlayer = this.mainAllPurpose.findIndex(x => x.id == player.id)
+      this.mainAllPurpose.splice(indexSamePlayer, 1)
+    }
+    console.log(this.mainAllPurpose)
 
   }
-  compareDate() {
-    this.isPastDate = this.inputDate < new Date;
+
+  isPlayerChecked(player) {
+    if (this.currentMatch && this.currentMatch.composition) {
+      return this.currentMatch.composition.some(x => x.id == player.id)
+    }
   }
 }

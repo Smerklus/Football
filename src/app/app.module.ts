@@ -66,8 +66,6 @@ import { TrainerService } from './services/trainers.service';
     ReactiveFormsModule,
     RouterModule,
     HttpClientModule,
-    BrowserAnimationsModule,
-    NoopAnimationsModule,
   ],
   providers: [PlayerService,CalendarService,TrainerService],
   bootstrap: [AppComponent],

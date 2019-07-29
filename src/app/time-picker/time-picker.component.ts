@@ -45,35 +45,35 @@ export class TimePickerComponent implements OnChanges, OnInit, DoCheck {
   }
 
   minusHour(hour) {
-    if (hour.path[0].nextElementSibling.value > 0) {
-      hour.path[0].nextElementSibling.value--
+    if (hour.path[1].nextElementSibling.value > 0) {
+      hour.path[1].nextElementSibling.value--
     }
-    hour.path[0].nextElementSibling.value = hour.path[0].nextElementSibling.value.padStart(2, "0")
-    this.inputHour = hour.path[0].nextElementSibling.value
+    hour.path[1].nextElementSibling.value = hour.path[1].nextElementSibling.value.padStart(2, "0")
+    this.inputHour = hour.path[1].nextElementSibling.value
     this.addTime();
   }
   plusHour(hour) {
-    if (hour.path[0].previousElementSibling.value < 23) {
-      hour.path[0].previousElementSibling.value++
+    if (hour.path[1].previousElementSibling.value < 23) {
+      hour.path[1].previousElementSibling.value++
     }
-    hour.path[0].previousElementSibling.value = hour.path[0].previousElementSibling.value.padStart(2, "0")
-    this.inputHour = hour.path[0].previousElementSibling.value
+    hour.path[1].previousElementSibling.value = hour.path[1].previousElementSibling.value.padStart(2, "0")
+    this.inputHour = hour.path[1].previousElementSibling.value
     this.addTime();
   }
   minusMinute(hour) {
-    if (hour.path[0].nextElementSibling.value > 0) {
-      hour.path[0].nextElementSibling.value--
+    if (hour.path[1].nextElementSibling.value > 0) {
+      hour.path[1].nextElementSibling.value--
     }
-    hour.path[0].nextElementSibling.value = hour.path[0].nextElementSibling.value.padStart(2, "0")
-    this.inputMinute = hour.path[0].nextElementSibling.value
+    hour.path[1].nextElementSibling.value = hour.path[1].nextElementSibling.value.padStart(2, "0")
+    this.inputMinute = hour.path[1].nextElementSibling.value
     this.addTime();
   }
   plusMinute(hour) {
-    if (hour.path[0].previousElementSibling.value < 59) {
-      hour.path[0].previousElementSibling.value++
+    if (hour.path[1].previousElementSibling.value < 59) {
+      hour.path[1].previousElementSibling.value++
     }
-    hour.path[0].previousElementSibling.value = hour.path[0].previousElementSibling.value.padStart(2, "0")
-    this.inputMinute = hour.path[0].previousElementSibling.value
+    hour.path[1].previousElementSibling.value = hour.path[1].previousElementSibling.value.padStart(2, "0")
+    this.inputMinute = hour.path[1].previousElementSibling.value
     
     this.addTime();
 

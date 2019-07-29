@@ -29,16 +29,140 @@
       "id": 20
     },
     {
-      "date": "2019-07-15T21:00:00.000Z",
-      "time": "12:28",
-      "oponent": "Текстильщик",
-      "id": 21
-    },
-    {
       "date": "2019-07-17T21:00:00.000Z",
       "time": "19:10",
       "oponent": "Золотой",
       "id": 22
+    },
+    {
+      "date": "2019-07-02T21:00:00.000Z",
+      "time": "05:03",
+      "oponent": "Шинник",
+      "score": "3:2",
+      "composition": "",
+      "id": 23
+    },
+    {
+      "date": "2019-07-01T21:00:00.000Z",
+      "time": "05:10",
+      "oponent": "Клуб",
+      "score": "1:1",
+      "id": 24
+    },
+    {
+      "date": "2019-07-02T21:00:00.000Z",
+      "time": "3:3",
+      "oponent": "Клуб",
+      "score": "2:2",
+      "composition": [
+        {
+          "name": "Антон",
+          "surname": "Картанов",
+          "role": {
+            "value": "goalkeeper",
+            "viewValue": "Вратарь"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 66,
+          "id": 1
+        },
+        {
+          "name": "Алексей",
+          "surname": "Баранов",
+          "role": {
+            "value": "all-purpose",
+            "viewValue": "Универсал"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 14,
+          "id": 3
+        },
+        {
+          "name": "Данил",
+          "surname": "Матвеев",
+          "role": {
+            "value": "goalkeeper",
+            "viewValue": "Вратарь"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 1,
+          "id": 2
+        }
+      ],
+      "id": 25
+    },
+    {
+      "date": "2019-06-30T21:00:00.000Z",
+      "time": "undefined:undefined",
+      "oponent": "",
+      "composition": [
+        {
+          "name": "Антон",
+          "surname": "Картанов",
+          "role": {
+            "value": "goalkeeper",
+            "viewValue": "Вратарь"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 66,
+          "id": 1
+        },
+        {
+          "name": "Данил",
+          "surname": "Матвеев",
+          "role": {
+            "value": "goalkeeper",
+            "viewValue": "Вратарь"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 1,
+          "id": 2
+        },
+        {
+          "name": "Алексей",
+          "surname": "Баранов",
+          "role": {
+            "value": "all-purpose",
+            "viewValue": "Универсал"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 14,
+          "id": 3
+        },
+        {
+          "name": "Николай ",
+          "surname": "Воронин",
+          "role": {
+            "value": "all-purpose",
+            "viewValue": "Универсал"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 24,
+          "id": 4
+        }
+      ],
+      "id": 26
     }
   ],
   "trainers": [
