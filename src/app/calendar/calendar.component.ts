@@ -70,6 +70,7 @@ export class CalendarComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
      if (result) this.deleteCalendarMatch(match);
     });
+    match.stopPropagation();
   }
 
 

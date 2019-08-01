@@ -4,12 +4,10 @@ export class CalendarMatch {
 
     constructor(
         public date: string,
-        public time: {
-            hour: number,
-            minute: number
-        },
+        public time: string,
         public oponent: string,
         public score: any,
+        public composition: any,
         public id: number
     ) { }
 }

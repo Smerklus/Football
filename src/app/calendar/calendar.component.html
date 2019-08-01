@@ -65,7 +65,8 @@
                  [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
               <div class="example-element-diagram">
                 <div class="example-element-score"> {{element.score}} </div>
-                <div class="example-element-oponent"> {{element.oponent}} </div>
+                <div class="example-element-oponent">{{element.oponent}} </div>
+                <div class="example-element-composition" *ngFor="let player of element.composition">{{player.name}} {{player.surname}}</div>
               </div>
             </div>
           </td>

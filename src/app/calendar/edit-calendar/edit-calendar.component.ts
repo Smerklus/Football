@@ -37,7 +37,7 @@ export class EditCalendarComponent implements OnChanges, OnInit {
   isChecked;
   inputChecked;
   indexSamePlayer;
-
+  isDisabled;
   tape = [null, true];
 
   done = null;
@@ -60,11 +60,23 @@ export class EditCalendarComponent implements OnChanges, OnInit {
             this.inputTime = this.currentMatch.time;
             this.isPastDate = new Date(this.currentMatch.date) < new Date;
             this.mainAllPurpose = this.currentMatch.composition;
+            if (this.currentMatch.oponentPlayers) {
+              this.currentMatch.oponentPlayers.forEach(x => {
+                (<FormArray>this.calendarForm.controls.oponentData.get('oponentPlayers')).push(
+                  new FormGroup({
+                    name: new FormControl(x.name),
+                    surname: new FormControl(x.surname)
+                  })
+                );
+              });
+            };
             this.calendarForm.patchValue({
               calendarData: {
                 date: this.currentMatch.date,
-                oponent: this.currentMatch.oponent,
               },
+              oponentData: {
+                oponentTeam: this.currentMatch.oponent,
+              }
             });
 
             console.log(this.calendarForm)
@@ -123,9 +135,10 @@ export class EditCalendarComponent implements OnChanges, OnInit {
         {
           date: this.calendarForm.value.calendarData.date,
           time: this.outputTime,
-          oponent: this.calendarForm.value.calendarData.oponent,
+          oponent: this.calendarForm.value.oponentData.oponentTeam,
           score: this.outputScore,
           composition: this.mainAllPurpose,
+          oponentPlayers: this.calendarForm.value.oponentData.oponentPlayers
         }).subscribe(x => {
           console.log(this.calendarForm)
           formDirective.resetForm();
@@ -139,9 +152,10 @@ export class EditCalendarComponent implements OnChanges, OnInit {
         {
           date: this.calendarForm.value.calendarData.date,
           time: this.outputTime,
-          oponent: this.calendarForm.value.calendarData.oponent,
+          oponent: this.calendarForm.value.oponentData.oponentTeam,
           score: this.outputScore,
           composition: this.mainAllPurpose,
+          oponentPlayers: this.calendarForm.value.oponentData.oponentPlayers
         }).subscribe(x => {
           console.log(this.calendarForm)
           // formDirective.resetForm();
@@ -182,13 +196,16 @@ export class EditCalendarComponent implements OnChanges, OnInit {
 
 
     this.calendarForm = new FormGroup({
+      oponentData: new FormGroup({
+        oponentTeam: new FormControl('', Validators.required),
+        oponentPlayers: new FormArray([]),
+      }),
       calendarData: new FormGroup({
         date: new FormControl('', Validators.required),
-        oponent: new FormControl('', Validators.required),
       }),
       compositionData: new FormGroup({
         composition: new FormControl({})
-      })
+      }),
     });
   }
 
@@ -216,6 +233,7 @@ export class EditCalendarComponent implements OnChanges, OnInit {
       let indexSamePlayer = this.mainAllPurpose.findIndex(x => x.id == player.id)
       this.mainAllPurpose.splice(indexSamePlayer, 1)
     }
+    
     console.log(this.mainAllPurpose)
 
   }
@@ -225,4 +243,29 @@ export class EditCalendarComponent implements OnChanges, OnInit {
       return this.currentMatch.composition.some(x => x.id == player.id)
     }
   }
+
+  isDisabledBox(player){
+   let isChecked = this.mainAllPurpose.some(x=>x.id == player.id)
+    if (this.mainAllPurpose.length > 4 && !isChecked)  {
+      return true;
+    }
+    else {
+      return false;
+    }
+
+  }
+
+  addOponent() {
+    (<FormArray>this.calendarForm.controls.oponentData.get('oponentPlayers')).push(
+      new FormGroup({
+        name: new FormControl(),
+        surname: new FormControl()
+      })
+    );
+  }
+
+  removeOponent(i: number) {
+    (<FormArray>this.calendarForm.controls.oponentData.get('oponentPlayers')).removeAt(i);
+  }
+
 }

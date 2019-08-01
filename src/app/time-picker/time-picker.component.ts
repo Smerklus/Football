@@ -16,6 +16,7 @@ export class TimePickerComponent implements OnChanges, OnInit, DoCheck {
   @Output() inputTimeChange = new EventEmitter<string>();
 
   constructor() {
+
   }
 
 
@@ -74,15 +75,15 @@ export class TimePickerComponent implements OnChanges, OnInit, DoCheck {
     }
     hour.path[1].previousElementSibling.value = hour.path[1].previousElementSibling.value.padStart(2, "0")
     this.inputMinute = hour.path[1].previousElementSibling.value
-    
+
     this.addTime();
 
   }
   getTime() {
     console.log(this.inputTime)
-    if (this.inputTime){
-    this.inputHour = +this.inputTime.split(":")[0];
-    this.inputMinute = +this.inputTime.split(":")[1];
+    if (this.inputTime) {
+      this.inputHour = this.inputTime.split(":")[0].padStart(2, "0");
+      this.inputMinute = this.inputTime.split(":")[1].padStart(2, "0");
     }
   }
   addTime() {
@@ -91,17 +92,22 @@ export class TimePickerComponent implements OnChanges, OnInit, DoCheck {
     this.inputTimeChange.emit(this.time)
   }
 
-ngOnChanges(){
-  this.getTime();
-  this.addTime();
-
-}
-
-  ngOnInit() {
+  ngOnChanges() {
+    this.getTime();
+    this.addTime();
 
   }
 
-  ngDoCheck(){
+  ngOnInit() {
+    if (!this.inputTime) {
+      this.inputTime = "12:00";
+      this.getTime();
+      this.addTime();
+
+    }
+  }
+
+  ngDoCheck() {
 
   }
 
