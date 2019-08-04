@@ -21,15 +21,18 @@
     display: inline-flex;
     flex-direction: column-reverse;
   }
-  
+  .delete-button{
+    position: relative;
+    top: 6px;
+  }
   span{
     align-self: center;
     height: inherit;
-    bottom: 42px;
+    bottom: 39px;
     position: inherit;
       border-bottom: 1px solid grey;
       font-size: 17px;
-      padding-bottom: 6px;
+      padding-bottom: 7px;
   }
   
   .picker {
@@ -44,14 +47,22 @@
     text-align: center;
    
   }
+  .picker:hover{
+    outline: -webkit-focus-ring-color auto 1px;
+   }
    .picker::-webkit-inner-spin-button {
       display: none;
     }
   
-    button{
+    .mat-button{
+      min-width: 10px;
+      width: 10px;
       padding: 0px;
       height: 28px;
       width: 28px;
+    }
+    .mat-button:hover{
+      outline: -webkit-focus-ring-color auto 1px;
     }
   
     .minus-button{

@@ -42,6 +42,9 @@ span {
   width: 28px;
   text-align: center;
 }
+.picker:hover{
+  outline: -webkit-focus-ring-color auto 1px;
+}
 .picker::-webkit-inner-spin-button {
   display: none;
 }
@@ -57,7 +60,9 @@ span {
   height: 24px;
   min-width: 24px;
 }
-
+.mat-button:hover{
+  outline: -webkit-focus-ring-color auto 1px;
+}
 .minus-button {
   margin-top: 5px;
 }

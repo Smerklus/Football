@@ -22,6 +22,7 @@ export class TimePickerComponent implements OnChanges, OnInit, DoCheck {
 
 
   changeHourScroll(scrollEvent) {
+    scrollEvent.preventDefault();
     if (scrollEvent.deltaY < 0 && scrollEvent.path[0].value < 23) {
       scrollEvent.path[0].value++;
     }
@@ -34,6 +35,7 @@ export class TimePickerComponent implements OnChanges, OnInit, DoCheck {
   }
 
   changeMinuteScroll(scrollEvent) {
+    scrollEvent.preventDefault();
     if (scrollEvent.deltaY < 0 && scrollEvent.path[0].value < 59) {
       scrollEvent.path[0].value++;
     }
@@ -80,7 +82,6 @@ export class TimePickerComponent implements OnChanges, OnInit, DoCheck {
 
   }
   getTime() {
-    console.log(this.inputTime)
     if (this.inputTime) {
       this.inputHour = this.inputTime.split(":")[0].padStart(2, "0");
       this.inputMinute = this.inputTime.split(":")[1].padStart(2, "0");
@@ -88,7 +89,6 @@ export class TimePickerComponent implements OnChanges, OnInit, DoCheck {
   }
   addTime() {
     this.time = this.inputHour + ":" + this.inputMinute;
-    console.log(this.time);
     this.inputTimeChange.emit(this.time)
   }
 

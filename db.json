@@ -4,14 +4,194 @@
       "date": "2019-07-13T21:00:00.000Z",
       "time": "13:30",
       "oponent": "Аполо",
+      "teamType": {
+        "value": "main",
+        "viewValue": "РИВ ГОШ"
+      },
       "score": "6:4",
+      "composition": [
+        {
+          "name": "Алексей",
+          "surname": "Баранов",
+          "role": {
+            "value": "all-purpose",
+            "viewValue": "Универсал"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 14,
+          "id": 3
+        },
+        {
+          "name": "Николай ",
+          "surname": "Воронин",
+          "role": {
+            "value": "all-purpose",
+            "viewValue": "Универсал"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 24,
+          "id": 4
+        },
+        {
+          "name": "Михаил",
+          "surname": "Ершов",
+          "role": {
+            "value": "all-purpose",
+            "viewValue": "Универсал"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 6,
+          "id": 7
+        },
+        {
+          "name": "Андрей",
+          "surname": "Павлов",
+          "role": {
+            "value": "all-purpose",
+            "viewValue": "Универсал"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 96,
+          "id": 11
+        },
+        {
+          "name": "Антон",
+          "surname": "Картанов",
+          "role": {
+            "value": "goalkeeper",
+            "viewValue": "Вратарь"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 66,
+          "id": 1
+        }
+      ],
+      "oponentPlayers": [
+        {
+          "name": "Антон",
+          "surname": "Ершин"
+        },
+        {
+          "name": "Андрей",
+          "surname": "Иванов"
+        },
+        {
+          "name": "Василий",
+          "surname": "Смирнов"
+        },
+        {
+          "name": "Павел",
+          "surname": "Романов"
+        },
+        {
+          "name": "Александр",
+          "surname": "Васильев"
+        }
+      ],
       "id": 16
     },
     {
       "date": "2019-07-01T21:00:00.000Z",
       "time": "10:20",
       "oponent": "Аполо",
-      "score": "2:3",
+      "score": "",
+      "teamType": {
+        "value": "main",
+        "viewValue": "РИВ ГОШ"
+      },
+      "composition": [
+        {
+          "name": "Алексей",
+          "surname": "Баранов",
+          "role": {
+            "value": "all-purpose",
+            "viewValue": "Универсал"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 14,
+          "id": 3
+        },
+        {
+          "name": "Данила",
+          "surname": "Давиденко",
+          "role": {
+            "value": "all-purpose",
+            "viewValue": "Универсал"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 8,
+          "id": 6
+        },
+        {
+          "name": "Давид",
+          "surname": "Колбаия",
+          "role": {
+            "value": "all-purpose",
+            "viewValue": "Универсал"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 10,
+          "id": 9
+        },
+        {
+          "name": "Егор",
+          "surname": "Райфшнайдер",
+          "role": {
+            "value": "all-purpose",
+            "viewValue": "Универсал"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 88,
+          "id": 12
+        },
+        {
+          "name": "Антон",
+          "surname": "Картанов",
+          "role": {
+            "value": "goalkeeper",
+            "viewValue": "Вратарь"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 66,
+          "id": 1
+        }
+      ],
+      "oponentPlayers": [
+        {
+          "name": "Андре",
+          "surname": "Иванов"
+        }
+      ],
       "id": 18
     },
     {
@@ -19,6 +199,10 @@
       "time": "23:36",
       "oponent": "Золотой",
       "score": "5:2",
+      "teamType": {
+        "value": "main",
+        "viewValue": "РИВ ГОШ"
+      },
       "composition": [
         {
           "name": "Антон",
@@ -91,6 +275,62 @@
           "id": 6
         }
       ],
+      "oponentPlayers": [
+        {
+          "name": "Иван",
+          "surname": "Иванов"
+        },
+        {
+          "name": "Петр",
+          "surname": "Петров"
+        },
+        {
+          "name": "Сергей",
+          "surname": "Смирнов"
+        },
+        {
+          "name": "Олег",
+          "surname": "Денисов"
+        },
+        {
+          "name": "Денис",
+          "surname": "Андреев"
+        }
+      ],
+      "goalsList": [
+        {
+          "player": {
+            "name": "Алексей",
+            "surname": "Баранов",
+            "autoGoal": ""
+          },
+          "time": 18
+        },
+        {
+          "player": {
+            "name": "Николай ",
+            "surname": "Воронин",
+            "autoGoal": ""
+          },
+          "time": "20"
+        },
+        {
+          "player": {
+            "name": "Данила",
+            "surname": "Давиденко",
+            "autoGoal": ""
+          },
+          "time": "26"
+        },
+        {
+          "player": "",
+          "time": ""
+        },
+        {
+          "player": "",
+          "time": ""
+        }
+      ],
       "id": 19
     },
     {
@@ -98,6 +338,88 @@
       "time": "11:30",
       "oponent": "Золотой",
       "score": "4:3",
+      "teamType": {
+        "value": "main",
+        "viewValue": "РИВ ГОШ"
+      },
+      "composition": [
+        {
+          "name": "Алексей",
+          "surname": "Баранов",
+          "role": {
+            "value": "all-purpose",
+            "viewValue": "Универсал"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 14,
+          "id": 3
+        },
+        {
+          "name": "Данила",
+          "surname": "Давиденко",
+          "role": {
+            "value": "all-purpose",
+            "viewValue": "Универсал"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 8,
+          "id": 6
+        },
+        {
+          "name": "Давид",
+          "surname": "Колбаия",
+          "role": {
+            "value": "all-purpose",
+            "viewValue": "Универсал"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 10,
+          "id": 9
+        },
+        {
+          "name": "Дмитрий",
+          "surname": "Косенко",
+          "role": {
+            "value": "all-purpose",
+            "viewValue": "Универсал"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 11,
+          "id": 10
+        },
+        {
+          "name": "Данил",
+          "surname": "Матвеев",
+          "role": {
+            "value": "goalkeeper",
+            "viewValue": "Вратарь"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 1,
+          "id": 2
+        }
+      ],
+      "oponentPlayers": [
+        {
+          "name": "Петр",
+          "surname": "Золотов"
+        }
+      ],
       "id": 20
     },
     {
@@ -337,6 +659,140 @@
         }
       ],
       "id": 31
+    },
+    {
+      "date": "2019-07-31T21:00:00.000Z",
+      "time": "12:00",
+      "oponent": "Команда",
+      "score": "",
+      "teamType": {},
+      "composition": [],
+      "oponentPlayers": [],
+      "id": 32
+    },
+    {
+      "date": "2019-07-31T21:00:00.000Z",
+      "time": "12:00",
+      "oponent": "Аполо",
+      "score": "",
+      "teamType": {},
+      "composition": [],
+      "oponentPlayers": [
+        {
+          "name": "",
+          "surname": ""
+        },
+        {
+          "name": "",
+          "surname": ""
+        }
+      ],
+      "id": 33
+    },
+    {
+      "date": "2019-07-31T21:00:00.000Z",
+      "time": "17:00",
+      "oponent": "Тест",
+      "score": "2:1",
+      "teamType": {
+        "value": "main",
+        "viewValue": "РИВ ГОШ"
+      },
+      "composition": [
+        {
+          "name": "Алексей",
+          "surname": "Баранов",
+          "role": {
+            "value": "all-purpose",
+            "viewValue": "Универсал"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 14,
+          "id": 3
+        },
+        {
+          "name": "Данила",
+          "surname": "Давиденко",
+          "role": {
+            "value": "all-purpose",
+            "viewValue": "Универсал"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 8,
+          "id": 6
+        },
+        {
+          "name": "Давид",
+          "surname": "Колбаия",
+          "role": {
+            "value": "all-purpose",
+            "viewValue": "Универсал"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 10,
+          "id": 9
+        },
+        {
+          "name": "Егор",
+          "surname": "Райфшнайдер",
+          "role": {
+            "value": "all-purpose",
+            "viewValue": "Универсал"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 88,
+          "id": 12
+        },
+        {
+          "name": "Антон",
+          "surname": "Картанов",
+          "role": {
+            "value": "goalkeeper",
+            "viewValue": "Вратарь"
+          },
+          "teamType": {
+            "value": "main",
+            "viewValue": "РИВ ГОШ"
+          },
+          "number": 66,
+          "id": 1
+        }
+      ],
+      "oponentPlayers": [
+        {
+          "name": "Иван",
+          "surname": "Иванов"
+        },
+        {
+          "name": "Петр",
+          "surname": "Петров"
+        },
+        {
+          "name": "Андрей",
+          "surname": "Смирнов"
+        },
+        {
+          "name": "Федор",
+          "surname": "Егоров"
+        },
+        {
+          "name": "Алексей",
+          "surname": "Шестаков"
+        }
+      ],
+      "id": 34
     }
   ],
   "trainers": [

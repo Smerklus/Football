@@ -2,28 +2,28 @@
     <p>Выберите счет: </p>
     <div class="score-container">
         <div class="half-score-picker">
-            <button class="minus-button" type="button" (click)="minusFirstScore($event)">
+            <button mat-button class="minus-button" type="button" (click)="minusFirstScore($event)">
                 <mat-icon color="accent" style="width: 24px; height: 24px;">keyboard_arrow_down</mat-icon>
             </button>
-            <input type="number" class="picker" readonly [ngModel]="firstScore" (wheel)="changeScoreScroll($event)"
+            <input type="number" class="picker" readonly [(ngModel)]="firstScore" (wheel)="changeFirstScoreScroll($event)"
                 min="0" max="50">
-            <button class="plus-button" type="button" (click)="plusFirstScore($event)">
+            <button mat-button class="plus-button" type="button" (click)="plusFirstScore($event)">
                 <mat-icon color="accent" style="width: 24px; height: 24px;">keyboard_arrow_up</mat-icon>
             </button>
         </div>
         <span>:</span>
         <div class="half-score-picker">
-            <button class="minus-button" type="button" (click)="minusSecondScore($event)">
+            <button mat-button class="minus-button" type="button" (click)="minusSecondScore($event)">
                 <mat-icon color="accent" style="width: 24px; height: 24px;">keyboard_arrow_down</mat-icon>
             </button>
-            <input type="number" class="picker" readonly [ngModel]="secondScore" (wheel)="changeScoreScroll($event)"
+            <input type="number" class="picker" readonly [ngModel]="secondScore" (wheel)="changeSecondScoreScroll($event)"
                 min="0" max="50">
-            <button class="plus-button" type="button" (click)="plusSecondScore($event)">
+            <button mat-button class="plus-button" type="button" (click)="plusSecondScore($event)">
                 <mat-icon color="accent" style="width: 24px; height: 24px;">keyboard_arrow_up</mat-icon>
             </button>
         </div>
     </div>
-    <button mat-button color="accent" (click)="deleteScore()"  title="Убрать счет">
+    <button mat-button class="delete-button" type="button" color="accent" (click)="deleteScore()"  title="Убрать счет">
         <mat-icon>clear</mat-icon>
     </button>
 </div>

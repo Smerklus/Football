@@ -113,4 +113,11 @@ export class CalendarComponent implements OnInit {
     
     console.log(checked);
   }
+
+isTeamType(composition){
+   composition.forEach(x=>{
+   return x.teamType.viewValue;
+  })
+}
+
 }
