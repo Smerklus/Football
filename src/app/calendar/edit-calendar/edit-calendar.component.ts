@@ -97,6 +97,7 @@ export class EditCalendarComponent implements OnChanges, OnInit {
               });
             };
             if (this.currentMatch.goalsList) {
+             
               this.currentMatch.goalsList.forEach(x => {
                 (<FormArray>this.calendarForm.controls.protocolData.get('goals')).push(
                   new FormGroup({
@@ -306,7 +307,7 @@ export class EditCalendarComponent implements OnChanges, OnInit {
     }
     console.log(this.oldFirstOutputScore)
     if (+this.oldFirstOutputScore < +this.firstOutputScore) {
-      if (+this.firstOutputScore <= this.currentMatch.goalsList.length) {
+      if (this.currentMatch.goalsList && +this.firstOutputScore <= this.currentMatch.goalsList.length) {
         (<FormArray>this.calendarForm.controls.protocolData.get('goals')).push(
           new FormGroup({
             player: new FormControl(this.currentMatch.goalsList[this.firstOutputScore - 1].player),

@@ -43,6 +43,7 @@ export class CalendarComponent implements OnInit {
   expandedElement: CalendarMatch | null;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatTable, { static: true }) table: MatTable<any>;
 
   selectedTeamType: any;
 
@@ -107,6 +108,7 @@ export class CalendarComponent implements OnInit {
       this.setDataSource(this.calendarMatches);
     });
   }
+
   editOn(checked){
     // this.displayedColumns = ['edit','date', 'time', 'oponent', 'score', 'delete'];
     this.checked = checked;
