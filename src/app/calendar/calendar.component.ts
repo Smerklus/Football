@@ -15,8 +15,8 @@ export interface MatchType {
   styleUrls: ['./calendar.component.scss'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
       // transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
@@ -37,8 +37,8 @@ export class CalendarComponent implements OnInit {
   ];
 
   calendarMatches: CalendarMatch[] = [];
-  
-  displayedColumns: string[] = ['edit','date', 'time', 'oponent', 'score', 'delete'];
+
+  displayedColumns: string[] = ['edit', 'date', 'time', 'oponent', 'score', 'delete'];
   dataSource: MatTableDataSource<CalendarMatch>;
   expandedElement: CalendarMatch | null;
 
@@ -50,6 +50,7 @@ export class CalendarComponent implements OnInit {
   teams = [];
   teamsSet;
   checked;
+  allGoalsList: any;
 
   constructor(public calendarService: CalendarService, public dialog: MatDialog) {
     calendarService.getCalendarMatches().subscribe(x => {
@@ -69,7 +70,7 @@ export class CalendarComponent implements OnInit {
     const dialogRef = this.dialog.open(DeleteDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-     if (result) this.deleteCalendarMatch(match);
+      if (result) this.deleteCalendarMatch(match);
     });
     match.stopPropagation();
   }
@@ -96,11 +97,12 @@ export class CalendarComponent implements OnInit {
   setDataSource(array: CalendarMatch[]) {
     this.dataSource = new MatTableDataSource(array);
     this.dataSource.sort = this.sort;
+    console.log(this.dataSource)
   }
   deleteCalendarMatch(match) {
     this.calendarService.deleteCalendarMatch(match.path[1].childNodes[1].innerHTML).subscribe(x => {
       this.calendarMatches.splice(match.path[4].rowIndex - 1, 1);
-      this.teams=[];
+      this.teams = [];
       this.calendarMatches.forEach(x => {
         this.teams.push(x.oponent);
       });
@@ -109,17 +111,40 @@ export class CalendarComponent implements OnInit {
     });
   }
 
-  editOn(checked){
+  editOn(checked) {
     // this.displayedColumns = ['edit','date', 'time', 'oponent', 'score', 'delete'];
     this.checked = checked;
-    
+
     console.log(checked);
   }
 
-isTeamType(composition){
-   composition.forEach(x=>{
-   return x.teamType.viewValue;
-  })
-}
+  isTeamType(composition) {
+    composition.forEach(x => {
+      return x.teamType.viewValue;
+    })
+  }
 
+  sortGoalsList(element) {
+    this.expandedElement = this.expandedElement === element ? null : element;
+    this.allGoalsList=[];
+    console.log(element)
+    element.goalsList.ownGoals.forEach(ownGoal => {
+      console.log(ownGoal)
+      this.allGoalsList.push({name: ownGoal.player.name,surname: ownGoal.player.surname,time: ownGoal.time, oponent: "no"});
+    });
+    element.goalsList.oponentGoals.forEach(oponentGoal => {
+      this.allGoalsList.push({name: oponentGoal.player.name,surname: oponentGoal.player.surname,time: oponentGoal.time, oponent: "yes"})
+    });
+    this.allGoalsList.sort((a, b) => {
+      let timeGoalA = a.time;
+      let timeGoalB = b.time;
+      if (timeGoalA < timeGoalB)
+        return -1;
+      if (timeGoalA > timeGoalB)
+        return 1;
+      return 0;
+    });
+    console.log(this.allGoalsList)
+  }
+  
 }

@@ -1,3 +1,4 @@
+<app-page-header></app-page-header>
 <div class="team-list">
   <mat-tab-group>
     <mat-tab label="РИВ ГОШ">
@@ -5,44 +6,64 @@
         <div class="table-trainers-container mat-elevation-z4">
           <div class="table-container-header">
             <p>Тренерский и руководящий состав</p>
-            <button mat-raised-button color='primary' [routerLink]="['/trainers_panel']">
-              <mat-icon>create</mat-icon> Управление составом
+            <span class="spacer"></span>
+            <button mat-icon-button [matMenuTriggerFor]="mainTrainerMenu">
+              <mat-icon>more_vert</mat-icon>
             </button>
+            <mat-menu #mainTrainerMenu="matMenu">
+              <button mat-menu-item [routerLink]="['/team/trainers_panel',teamTypeMain]">
+                <mat-icon>create</mat-icon>
+                <span>Редактировать</span>
+              </button>
+            </mat-menu>
           </div>
           <div class="table-trainers-body">
             <mat-list>
               <mat-list-item>Тренер:
-                <div *ngFor="let trainer of trainers">
-                  <div *ngIf="trainer.position == 'Тренер'">
+                <ng-container *ngFor="let trainer of trainers">
+                  <div class="trainer-form-content"
+                    *ngIf="trainer.position == 'Тренер' && trainer.teamType.value == 'main'">
                     {{trainer.name}} {{trainer.surname}}
                   </div>
-                </div>
+                </ng-container>
               </mat-list-item>
               <mat-divider></mat-divider>
-              <mat-list-item>Капитан 
-                  <div *ngFor="let trainer of trainers">
-                      <div *ngIf="trainer.position == 'Капитан'">
-                        {{trainer.name}}{{trainer.surname}}
-                      </div>
-                    </div>
+              <mat-list-item>Капитан:
+                <ng-container *ngFor="let trainer of trainers">
+                  <div class="trainer-form-content"
+                    *ngIf="trainer.position == 'Капитан' && trainer.teamType.value == 'main'">
+                    {{trainer.name}} {{trainer.surname}}
+                  </div>
+                </ng-container>
               </mat-list-item>
               <mat-divider></mat-divider>
-              <mat-list-item>Вице-капитан
-                  <div *ngFor="let trainer of trainers">
-                      <div *ngIf="trainer.position == 'Вице-капитан'">
-                        {{trainer.name}}{{trainer.surname}}
-                      </div>
-                    </div>
+              <mat-list-item>Вице-капитан:
+                <ng-container *ngFor="let trainer of trainers">
+                  <div class="trainer-form-content"
+                    *ngIf="trainer.position == 'Вице-капитан' && trainer.teamType.value == 'main'">
+                    {{trainer.name}} {{trainer.surname}}
+                  </div>
+                </ng-container>
               </mat-list-item>
             </mat-list>
+
+
           </div>
         </div>
         <div class="table-players-container mat-elevation-z4">
           <div class="table-container-header">
             <p>Состав команды</p>
-            <button mat-raised-button color='primary' [routerLink]="['/control_panel']">
-              <mat-icon>create</mat-icon> Управление составом
+            <span class="spacer"></span>
+            <button mat-icon-button [matMenuTriggerFor]="mainPlayersMenu">
+              <mat-icon>more_vert</mat-icon>
             </button>
+            <mat-menu #mainPlayersMenu="matMenu">
+              <button color="accent" mat-menu-item [routerLink]="['/team/control_panel']">
+                <mat-icon>create</mat-icon>
+                <span>Редактировать</span>
+              </button>
+            </mat-menu>
+
           </div>
           <div class="table-players-body">
             <table mat-table #MatSortMain='matSort' [dataSource]="dataMainPlayersSource" matSort
@@ -86,17 +107,45 @@
         <div class="table-trainers-container mat-elevation-z4">
           <div class="table-container-header">
             <p>Тренерский и руководящий состав</p>
-            <button mat-raised-button color='primary' [routerLink]="['/control_panel']">
-              <mat-icon>create</mat-icon> Управление составом
+            <span class="spacer"></span>
+            <button mat-icon-button [matMenuTriggerFor]="dTrainersMenu">
+              <mat-icon>more_vert</mat-icon>
             </button>
+            <mat-menu #dTrainersMenu="matMenu">
+              <button mat-menu-item [routerLink]="['/team/trainers_panel',teamTypeD]">
+                <mat-icon>create</mat-icon>
+                <span>Редактировать</span>
+              </button>
+            </mat-menu>
           </div>
           <div class="table-trainers-body">
             <mat-list>
-              <mat-list-item>Тренер</mat-list-item>
+              <mat-list-item>Тренер:
+                <ng-container *ngFor="let trainer of trainers">
+                  <div class="trainer-form-content"
+                    *ngIf="trainer.position == 'Тренер' && trainer.teamType.value == 'd'">
+                    {{trainer.name}} {{trainer.surname}}
+                  </div>
+                </ng-container>
+              </mat-list-item>
               <mat-divider></mat-divider>
-              <mat-list-item>Капитан</mat-list-item>
+              <mat-list-item>Капитан:
+                <ng-container *ngFor="let trainer of trainers">
+                  <div class="trainer-form-content"
+                    *ngIf="trainer.position == 'Капитан' && trainer.teamType.value == 'd'">
+                    {{trainer.name}} {{trainer.surname}}
+                  </div>
+                </ng-container>
+              </mat-list-item>
               <mat-divider></mat-divider>
-              <mat-list-item>Вице-капитан</mat-list-item>
+              <mat-list-item>Вице-капитан:
+                <ng-container *ngFor="let trainer of trainers">
+                  <div class="trainer-form-content"
+                    *ngIf="trainer.position == 'Вице-капитан' && trainer.teamType.value == 'd'">
+                    {{trainer.name}} {{trainer.surname}}
+                  </div>
+                </ng-container>
+              </mat-list-item>
             </mat-list>
           </div>
         </div>
@@ -104,9 +153,16 @@
         <div class="table-players-container mat-elevation-z4">
           <div class="table-container-header">
             <p>Состав команды</p>
-            <button mat-raised-button color='primary' [routerLink]="['/control_panel']">
-              <mat-icon>create</mat-icon> РЕДАКТИРОВАНИЕ
+            <span class="spacer"></span>
+            <button mat-icon-button [matMenuTriggerFor]="dPlayersMenu">
+              <mat-icon>more_vert</mat-icon>
             </button>
+            <mat-menu #dPlayersMenu="matMenu">
+              <button mat-menu-item [routerLink]="['/team/control_panel']">
+                <mat-icon>create</mat-icon>
+                <span>Редактировать</span>
+              </button>
+            </mat-menu>
           </div>
           <div class="table-players-body">
             <table mat-table #MatSortD='matSort' [dataSource]="dataDPlayersSource" matSort class="mat-elevation-z8">

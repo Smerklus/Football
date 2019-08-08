@@ -1,20 +1,17 @@
 <!-- <div class="intro"> -->
-  <div class="header-container mat-elevation-z8">
-    <div class="main-title" [routerLink]="['/']"> 
-      <h5>Футбольный клуб РИВ ГОШ</h5>
-      <img class="logo" src="https://img.nagradion.ru/images/bf300x500/shields/BGXN2zMV.png?1563090140" alt="">
-    </div>
-      <div class="nav-bar">
-    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-      <mat-button-toggle value="news" [routerLink]="['']" color="accent">Новости</mat-button-toggle>
-      <mat-button-toggle value="teams" [routerLink]="['/team']">Команды</mat-button-toggle>
-      <mat-button-toggle value="calendar" [routerLink]="['/calendar']">Календарь</mat-button-toggle>
-      <mat-button-toggle value="statistic" [routerLink]="['/statistic']">Статистика</mat-button-toggle>
-      <mat-button-toggle value="contacts" [routerLink]="['']">Контакты</mat-button-toggle>
-    </mat-button-toggle-group>
-  </div>
-  </div>
-  <div class="container-content">
-    <router-outlet></router-outlet>
-  </div>
+<div class="header-container mat-elevation-z8">
+  <mat-toolbar color="primary">
+    <img class="logo" src="https://img.nagradion.ru/images/bf300x500/shields/BGXN2zMV.png?1563090140" alt="">
+    <div class="logo-title" mat-h5>ФК РИВ ГОШ</div>
+    <button mat-button type="button" [routerLink]="['']">Новости</button>
+    <button mat-button type="button" [routerLink]="['/team']">Команды</button>
+    <button mat-button type="button" [routerLink]="['/calendar']">Календарь</button>
+    <button mat-button type="button" [routerLink]="['/statistic']">Статистика</button>
+    <button mat-button type="button" [routerLink]="['']">Контакты</button>
+    <span class="spacer"></span>
+  </mat-toolbar>
+</div>
+<div class="container-content">
+  <router-outlet></router-outlet>
+</div>
 <!-- </div> -->

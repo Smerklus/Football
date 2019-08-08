@@ -24,9 +24,9 @@ const statisticRoutes: Routes = [
 
 const appRoutes: Routes = [
   { path: 'team', component: TeamComponent },
-  { path: 'trainers_panel', component: TrainersControlComponent },
-  { path: 'control_panel', component: ControlComponent },
-  { path: 'control_panel/:id', component: ControlComponent },
+  { path: 'team/trainers_panel/:teamType', component: TrainersControlComponent },
+  { path: 'team/control_panel', component: ControlComponent },
+  { path: 'team/control_panel/:id', component: ControlComponent },
   { path: 'calendar', component: CalendarComponent },
   { path: 'edit_calendar/:id', component: EditCalendarComponent },
   { path: 'edit_calendar', component: EditCalendarComponent },

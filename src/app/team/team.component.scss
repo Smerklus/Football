@@ -94,6 +94,9 @@ $secondary-light-color: #ff79b0;
 .list-item {
   margin: 10px;
 }
+.spacer{
+  flex: 1 1 auto;
+}
 .text-center {
   padding-bottom: 15px;
   margin-bottom: 15px;
@@ -115,6 +118,9 @@ $secondary-light-color: #ff79b0;
   align-self: flex-end;
   display: block;
   width: 220px;
+}
+.trainer-form-content{
+  padding: 0px 16px;
 }
 .trainers-list {
   margin-bottom: 10px;

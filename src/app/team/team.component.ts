@@ -17,7 +17,8 @@ export class TeamComponent implements OnInit {
   dataCountMainPlayers = [];
   dataCountDPlayers = [];
   trainers: Trainer[];
-
+  teamTypeMain = 'main';
+  teamTypeD = 'd';
 
   dataMainPlayersSource: MatTableDataSource<Player>;
   dataDPlayersSource: MatTableDataSource<Player>;
@@ -40,8 +41,9 @@ export class TeamComponent implements OnInit {
       console.log(this.dataMainPlayersSource)
       console.log(this.dataDPlayersSource)
     });
-    trainerApi.getTrainers().subscribe(z=>{
+    trainerApi.getTrainers().subscribe(z => {
       this.trainers = z;
+      console.log(this.trainers)
     })
   }
   ngOnInit() {
@@ -51,8 +53,8 @@ export class TeamComponent implements OnInit {
     this.dataMainPlayersSource.sort = this.sortMain;
     this.dataMainPlayersSource.sortingDataAccessor = (item, property) => {
       switch (property) {
-         case "role": return item.role.viewValue;
-         default: return item[property];
+        case "role": return item.role.viewValue;
+        default: return item[property];
       }
     };
   }
@@ -61,8 +63,8 @@ export class TeamComponent implements OnInit {
     this.dataDPlayersSource.sort = this.sortD;
     this.dataDPlayersSource.sortingDataAccessor = (item, property) => {
       switch (property) {
-         case "role": return item.role.viewValue;
-         default: return item[property];
+        case "role": return item.role.viewValue;
+        default: return item[property];
       }
     };
   }

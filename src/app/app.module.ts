@@ -31,6 +31,7 @@ import { ProtocolComponent } from './protocol/protocol.component';
 import { DeleteDialogPlayerComponent } from './delete-dialog-player/delete-dialog-player.component';
 import { TrainersControlComponent } from './trainers-control/trainers-control.component';
 import { TrainerService } from './services/trainers.service';
+import { PageHeaderComponent } from './page-header/page-header.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { TrainerService } from './services/trainers.service';
     ProtocolComponent,
     DeleteDialogPlayerComponent,
     TrainersControlComponent,
+    PageHeaderComponent,
   ],
   imports: [
     BrowserModule,

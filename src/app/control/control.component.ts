@@ -93,7 +93,7 @@ export class ControlComponent implements OnInit {
     })
   };
   editPlayer(player) {
-    this.route.navigate(['/control_panel/', player.path[1].childNodes[1].innerHTML])
+    this.route.navigate(['/team/control_panel/', player.path[1].childNodes[1].innerHTML])
   }
 
   openDialog(player) {

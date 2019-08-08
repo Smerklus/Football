@@ -4,35 +4,13 @@ $primary-light-color: #757de8;
 $secondary-color: #ff4081;
 $secondary-dark-color: #c60055;
 $secondary-light-color:#ff79b0;
-.mat-header-row{
-.mat-sort-header-container {
-  display: flex;
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
+.spacer{
+  flex: 1 1 auto;
 }
-}
-.mat-button-toggle-checked .mat-button-toggle-focus-overlay {
-  border-bottom: none;
-}
-.mat-button-toggle {
-  background: $primary-color;
-  width: 150px;
-}
-.mat-button-toggle-checked {
-  background: $primary-color;
+.logo-title{
+padding: 0 16px;
 }
 
-.mat-button-toggle-appearance-standard{
-  color: white;
-} 
-mat-button-toggle-group {
-  color: white;
-  display: flex;
-  justify-content: center;
-  width: -webkit-fill-available;
-  background: $primary-color;
-}
 .header-container {
   overflow: hidden;
     position: fixed;
@@ -42,41 +20,13 @@ mat-button-toggle-group {
     z-index: 2;
   // box-shadow: 0 5px 10px rgba(0, 0, 0, 0.35);
 }
-.intro {
-  // background:#d6d4d4;
-  margin-left: auto;
-  margin-right: auto;
-  width: 80%;
-  height: 100%;
-}
+
 .logo {
   padding-left: 20px;
   height: 50px;
   width: 50px;
 }
-.main-title {
-  &:focus {
-    text-decoration: none;
-    outline: none;
-  }
-  background: $primary-dark-color;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 20px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  text-align: center;
-  font-size: 25px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  color: white;
-  cursor: pointer;
-}
-.nav-bar {
-  font-size: 14px;
-  font-weight: 500;
-  color: white;
-}
+
 .container-content {
     display: -webkit-box;
     display: flex;

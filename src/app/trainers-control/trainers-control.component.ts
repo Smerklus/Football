@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
 import { TrainerService } from '../services/trainers.service';
 import { Trainer } from '../models/trainer.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { TeamType } from '../models/team-type.model';
 
 @Component({
   selector: 'app-trainers-control',
@@ -11,35 +12,47 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./trainers-control.component.scss']
 })
 export class TrainersControlComponent implements OnInit {
-
+  teamTypes: TeamType[] = [
+    { value: 'main', viewValue: 'РИВ ГОШ' },
+    { value: 'd', viewValue: 'РИВ ГОШ - д' },
+  ];
   form: FormGroup;
   trainers: Trainer[];
   id;
+  teamType;
   trainer;
-  constructor(public trainerApi: TrainerService, public activatedRoute: ActivatedRoute) {
-
-    // trainerApi.getTrainers().subscribe(x => this.trainers = x)
-    // activatedRoute.paramMap.subscribe(x => {
-
-    //   this.id = x.get('id');
-    //   if (this.id) {
-    //     this.trainerApi.getTrainerById(this.id).subscribe(x => {
-    //       this.trainer = x;
-
-    //       if (this.trainer) {
-    //         this.form.patchValue({
-    //           name: this.player.name,
-    //           surname: this.player.surname,
-    //           role: this.roles.find(z => z.value == this.player.role.value),
-    //           teamType: this.teamTypes.find(z => z.value == this.player.teamType.value),
-    //           number: this.player.number
-    //         });
-    //         // this.teamType=this.playerForm.value.teamType.value;
-    //         console.log(this.playerForm)
-    //       };
-    //     });
-    //   };
-    // })
+  captain;
+  viceCaptain;
+  constructor(public trainerApi: TrainerService, public activatedRoute: ActivatedRoute, public router: Router) {
+    this.activatedRoute.paramMap.subscribe(x => {
+      this.teamType = x.get('teamType');
+    });
+    this.trainerApi.getTrainers().subscribe(x=>{
+      this.trainers = x;
+      this.trainer = this.trainers.find(trainer=>{
+        return trainer.teamType.value == this.teamType && trainer.position == 'Тренер'
+      })
+      this.captain = this.trainers.find(captain=>{
+        return captain.teamType.value == this.teamType && captain.position == 'Капитан'
+      })
+      this.viceCaptain = this.trainers.find(viceCaptain=>{
+        return viceCaptain.teamType.value == this.teamType && viceCaptain.position == 'Вице-капитан'
+      })
+      this.form.patchValue({
+        trainer:{
+          name: this.trainer.name,
+          surname: this.trainer.surname
+        },
+        captain:{
+          name: this.captain.name,
+          surname: this.captain.surname
+        },
+        viceCaptain:{
+          name: this.viceCaptain.name,
+          surname: this.viceCaptain.surname
+        }
+      })
+    })
   }
 
   ngOnInit() {
@@ -61,59 +74,77 @@ export class TrainersControlComponent implements OnInit {
   }
 
   onSubmitForm(formData: any, formDirective: FormGroupDirective) {
-    // if (this.id) {
-
-    //   this.trainerApi.putTrainerById(
-    //     this.id,
-    //     {
-    //       name: this.form.value.name,
-    //       surname: this.form.value.surname,
-    //       role: this.form.value.role,
-    //       teamType: this.form.value.teamType,
-    //       number: this.form.value.number,
-    //     }).subscribe(x => {
-    //       this.trainer.getPlayers().subscribe(x => this.trainers = x);
-    //       // this.table.renderRows();
-    //       console.log(this.form)
-    //       formDirective.resetForm();
-    //       this.form.reset();
-    //       console.log(this.trainers)
-    //     })
-    // }
-    // else {
+if(!this.trainers){
+    forkJoin(
+      this.trainerApi.postTrainer(
+        {
+          name: this.form.value.trainer.name,
+          surname: this.form.value.trainer.surname,
+          position: 'Тренер',
+          teamType: this.teamTypes.find(x => {
+          return  x.value == this.teamType
+          }),
+        }),
+      this.trainerApi.postTrainer(
+        {
+          name: this.form.value.captain.name,
+          surname: this.form.value.captain.surname,
+          position: 'Капитан',
+          teamType: this.teamTypes.find(x => {
+           return x.value == this.teamType
+          }),
+        }),
+      this.trainerApi.postTrainer(
+        {
+          name: this.form.value.viceCaptain.name,
+          surname: this.form.value.viceCaptain.surname,
+          position: 'Вице-капитан',
+          teamType: this.teamTypes.find(x => {
+           return x.value == this.teamType
+          }),
+        })
+    )
+      .subscribe(([res1, res2, res3]) => {
+        formDirective.resetForm();
+        this.form.reset();
+        this.router.navigate(['/team'])
+      })
+    }
+    else{
       forkJoin(
-        this.trainerApi.postTrainer(
+        this.trainerApi.putTrainerById(this.trainer.id,
           {
             name: this.form.value.trainer.name,
             surname: this.form.value.trainer.surname,
             position: 'Тренер',
-            teamType: { "value": "main", "viewValue": "РИВ ГОШ" },
+            teamType: this.teamTypes.find(x => {
+            return  x.value == this.teamType
+            }),
           }),
-        this.trainerApi.postTrainer(
+        this.trainerApi.putTrainerById(this.captain.id,
           {
             name: this.form.value.captain.name,
             surname: this.form.value.captain.surname,
             position: 'Капитан',
-            teamType: { "value": "main", "viewValue": "РИВ ГОШ" },
+            teamType: this.teamTypes.find(x => {
+             return x.value == this.teamType
+            }),
           }),
-        this.trainerApi.postTrainer(
+        this.trainerApi.putTrainerById(this.viceCaptain.id,
           {
             name: this.form.value.viceCaptain.name,
             surname: this.form.value.viceCaptain.surname,
             position: 'Вице-капитан',
-            teamType: { "value": "main", "viewValue": "РИВ ГОШ" },
+            teamType: this.teamTypes.find(x => {
+             return x.value == this.teamType
+            }),
           })
-      )
-    .subscribe(([res1,res2,res3]) => {
-        // this.trainers.push(x)
-        // // this.table.renderRows();
-        // console.log(this.form)
+      ).subscribe(([res1, res2, res3]) => {
         formDirective.resetForm();
         this.form.reset();
-        console.log(this.trainers)
+        this.router.navigate(['/team'])
       })
-    // }
-    console.log(this.form)
+    }
   }
 
 }

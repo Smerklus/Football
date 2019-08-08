@@ -28,7 +28,8 @@ export class EditCalendarComponent implements OnChanges, OnInit {
     { value: 'd', viewValue: 'РИВ ГОШ - д' },
   ];
 
-  playersGoals: PlayerGoal[] = [];
+  ownPlayersGoals: PlayerGoal[] = [];
+  oponentPlayersGoals: PlayerGoal[] = [];
 
   inputDate;
   inputTime;
@@ -52,6 +53,7 @@ export class EditCalendarComponent implements OnChanges, OnInit {
   isDisabled;
   selectedTeamType = 'main';
   oldFirstOutputScore;
+  oldSecondOutputScore;
 
   @ViewChild(MatTable, { static: false }) table: MatTable<any>;
   firstOutputScore: any;
@@ -74,7 +76,9 @@ export class EditCalendarComponent implements OnChanges, OnInit {
             this.inputTime = this.currentMatch.time;
             this.isPastDate = new Date(this.currentMatch.date) < new Date;
             this.mainAllPurpose = this.currentMatch.composition;
+            this.outputScore = this.inputScore;
             this.oldFirstOutputScore = this.currentMatch.score.split(":")[0];
+            this.oldSecondOutputScore = this.currentMatch.score.split(":")[1];
             // Костыль для отсутствующих TeamType
             if (this.currentMatch.teamType) {
               this.selectedTeamType = this.currentMatch.teamType;
@@ -97,9 +101,16 @@ export class EditCalendarComponent implements OnChanges, OnInit {
               });
             };
             if (this.currentMatch.goalsList) {
-             
-              this.currentMatch.goalsList.forEach(x => {
-                (<FormArray>this.calendarForm.controls.protocolData.get('goals')).push(
+              this.currentMatch.goalsList.ownGoals.forEach(x => {
+                (<FormArray>this.calendarForm.controls.protocolData.get('ownGoals')).push(
+                  new FormGroup({
+                    player: new FormControl(x.player),
+                    time: new FormControl(x.time)
+                  })
+                );
+              });
+              this.currentMatch.goalsList.oponentGoals.forEach(x => {
+                (<FormArray>this.calendarForm.controls.protocolData.get('oponentGoals')).push(
                   new FormGroup({
                     player: new FormControl(x.player),
                     time: new FormControl(x.time)
@@ -151,7 +162,8 @@ export class EditCalendarComponent implements OnChanges, OnInit {
   }
   updateScore(score) {
     this.outputScore = score;
-    this.addGoal(this.outputScore);
+    this.addOwnGoal(this.outputScore);
+    this.addOponentGoal(this.outputScore);
   }
 
   onSubmitForm(formData: any, formDirective: FormGroupDirective) {
@@ -167,7 +179,10 @@ export class EditCalendarComponent implements OnChanges, OnInit {
           teamType: this.calendarForm.value.compositionData.teamType,
           composition: this.mainAllPurpose,
           oponentPlayers: this.calendarForm.value.oponentData.oponentPlayers,
-          goalsList: this.calendarForm.value.protocolData.goals,
+          goalsList: {
+            ownGoals: this.calendarForm.value.protocolData.ownGoals,
+            oponentGoals: this.calendarForm.value.protocolData.oponentGoals
+          }
         }).subscribe(x => {
           console.log(this.calendarForm)
           formDirective.resetForm();
@@ -186,7 +201,10 @@ export class EditCalendarComponent implements OnChanges, OnInit {
           teamType: this.calendarForm.value.compositionData.teamType,
           composition: this.mainAllPurpose,
           oponentPlayers: this.calendarForm.value.oponentData.oponentPlayers,
-          goalsList: this.calendarForm.value.protocolData.goals,
+          goalsList: {
+            ownGoals: this.calendarForm.value.protocolData.ownGoals,
+            oponentGoals: this.calendarForm.value.protocolData.oponentGoals
+          }
         }).subscribe(x => {
           console.log(this.calendarForm)
         })
@@ -211,7 +229,8 @@ export class EditCalendarComponent implements OnChanges, OnInit {
         composition: new FormControl({})
       }),
       protocolData: new FormGroup({
-        goals: new FormArray([])
+        ownGoals: new FormArray([]),
+        oponentGoals: new FormArray([]),
       }),
     })
   }
@@ -299,24 +318,27 @@ export class EditCalendarComponent implements OnChanges, OnInit {
 
   }
 
-  addGoal(score) {
+  addOwnGoal(score) {
     if (score) {
       this.firstOutputScore = score.split(":")[0];
       console.log(this.firstOutputScore)
       this.secondOutputScore = score.split(":")[1];
     }
+    if(!this.oldFirstOutputScore){
+      this.oldFirstOutputScore = 0;
+    }
     console.log(this.oldFirstOutputScore)
     if (+this.oldFirstOutputScore < +this.firstOutputScore) {
-      if (this.currentMatch.goalsList && +this.firstOutputScore <= this.currentMatch.goalsList.length) {
-        (<FormArray>this.calendarForm.controls.protocolData.get('goals')).push(
+      if (this.currentMatch && this.currentMatch.goalsList.ownGoals && +this.firstOutputScore <= this.currentMatch.goalsList.ownGoals.length) {
+        (<FormArray>this.calendarForm.controls.protocolData.get('ownGoals')).push(
           new FormGroup({
-            player: new FormControl(this.currentMatch.goalsList[this.firstOutputScore - 1].player),
-            time: new FormControl(this.currentMatch.goalsList[this.firstOutputScore - 1].time)
+            player: new FormControl(this.currentMatch.goalsList.ownGoals[this.firstOutputScore - 1].player),
+            time: new FormControl(this.currentMatch.goalsList.ownGoals[this.firstOutputScore - 1].time)
           })
         );
       }
       else {
-        (<FormArray>this.calendarForm.controls.protocolData.get('goals')).push(
+        (<FormArray>this.calendarForm.controls.protocolData.get('ownGoals')).push(
           new FormGroup({
             player: new FormControl('', Validators.required),
             time: new FormControl('', Validators.required)
@@ -325,24 +347,69 @@ export class EditCalendarComponent implements OnChanges, OnInit {
       }
     }
     else {
-      (<FormArray>this.calendarForm.controls.protocolData.get('goals')).removeAt(this.firstOutputScore );
+      (<FormArray>this.calendarForm.controls.protocolData.get('ownGoals')).removeAt(this.firstOutputScore);
     }
     this.oldFirstOutputScore = this.firstOutputScore;
+  }
+  addOponentGoal(score) {
+    if (score) {
+      this.firstOutputScore = score.split(":")[0];
+      console.log(this.firstOutputScore)
+      this.secondOutputScore = score.split(":")[1];
+    }
+    if(!this.oldSecondOutputScore){
+      console.log(this.oldSecondOutputScore)
+      this.oldSecondOutputScore = 0;
+    }
+    console.log(this.oldSecondOutputScore)
+    if (+this.oldSecondOutputScore < +this.secondOutputScore) {
+      if (this.currentMatch && this.currentMatch.goalsList.oponentGoals && +this.secondOutputScore <= this.currentMatch.goalsList.oponentGoals.length) {
+        (<FormArray>this.calendarForm.controls.protocolData.get('oponentGoals')).push(
+          new FormGroup({
+            player: new FormControl(this.currentMatch.goalsList.oponentGoals[this.secondOutputScore - 1].player),
+            time: new FormControl(this.currentMatch.goalsList.oponentGoals[this.secondOutputScore - 1].time)
+          })
+        );
+      }
+      else {
+        (<FormArray>this.calendarForm.controls.protocolData.get('oponentGoals')).push(
+          new FormGroup({
+            player: new FormControl('', Validators.required),
+            time: new FormControl('', Validators.required)
+          })
+        );
+      }
+    }
+    else {
+      (<FormArray>this.calendarForm.controls.protocolData.get('oponentGoals')).removeAt(this.secondOutputScore);
+    }
+    this.oldSecondOutputScore = this.secondOutputScore;
   }
 
   updatePlayersGoals() {
     this.setStep(3);
-    this.playersGoals = [];
+    this.ownPlayersGoals = [];
+    this.oponentPlayersGoals = [];
     this.mainAllPurpose.forEach(player => {
-      this.playersGoals.push({ name: player.name, surname: player.surname, autoGoal: '' })
+      this.ownPlayersGoals.push({ name: player.name, surname: player.surname, autoGoal: '' })
     });
+    if (this.calendarForm.controls.oponentData.status == 'VALID') {
+      this.calendarForm.value.oponentData.oponentPlayers.forEach(player => {
+        this.oponentPlayersGoals.push({ name: player.name, surname: player.surname, autoGoal: '' })
+      })
+    }
 
     if (this.calendarForm.controls.oponentData.status == 'VALID') {
       this.calendarForm.value.oponentData.oponentPlayers.forEach(player => {
-        this.playersGoals.push({ name: player.name, surname: player.surname, autoGoal: '(Автогол)' })
+        this.ownPlayersGoals.push({ name: player.name, surname: player.surname, autoGoal: '(Автогол)' })
       })
     }
-    this.playersGoals.sort((a, b) => {
+    this.mainAllPurpose.forEach(player => {
+      this.oponentPlayersGoals.push({ name: player.name, surname: player.surname, autoGoal: '(Автогол)' })
+    });
+
+
+    this.ownPlayersGoals.sort((a, b) => {
       let playerA = a.name.toLowerCase() + a.surname.toLowerCase();
       let playerB = b.name.toLowerCase() + b.surname.toLowerCase();
       if (playerA < playerB)
@@ -351,7 +418,25 @@ export class EditCalendarComponent implements OnChanges, OnInit {
         return 1;
       return 0;
     });
-    this.playersGoals.sort((a, b) => {
+    this.ownPlayersGoals.sort((a, b) => {
+      let playerA = a.autoGoal.toLowerCase();
+      let playerB = b.autoGoal.toLowerCase();
+      if (playerA < playerB)
+        return -1;
+      if (playerA > playerB)
+        return 1;
+      return 0;
+    });
+    this.oponentPlayersGoals.sort((a, b) => {
+      let playerA = a.name.toLowerCase() + a.surname.toLowerCase();
+      let playerB = b.name.toLowerCase() + b.surname.toLowerCase();
+      if (playerA < playerB)
+        return -1;
+      if (playerA > playerB)
+        return 1;
+      return 0;
+    });
+    this.oponentPlayersGoals.sort((a, b) => {
       let playerA = a.autoGoal.toLowerCase();
       let playerB = b.autoGoal.toLowerCase();
       if (playerA < playerB)
@@ -367,6 +452,22 @@ export class EditCalendarComponent implements OnChanges, OnInit {
   }
   public changePlayerGoal(event): void {
     this.selectedPlayerGoal = event.value;
+    console.log(this.calendarForm)
   }
-
+  compareOwnFn(type1: any, type2: any): boolean {
+    if (type1.name === type2.name && type1.surname === type2.surname && type1.autoGoal === type2.autoGoal) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  compareOponentFn(type1: any, type2: any): boolean {
+    if (type1.name === type2.name && type1.surname === type2.surname && type1.autoGoal === type2.autoGoal) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 }
