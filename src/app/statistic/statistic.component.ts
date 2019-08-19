@@ -2,9 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import { PlayerService } from '../services/player.service';
+import { CalendarService } from '../services/calendar.service';
+import { Player } from '../models/player.model';
 
 export interface StatisticElement {
-  player: string;
+  player: Player;
   countMatchs: number;
   yellowCard: number;
   redCard: number;
@@ -17,24 +20,46 @@ export interface StatisticElement {
   templateUrl: './statistic.component.html',
   styleUrls: ['./statistic.component.scss']
 })
-export class StatisticComponent implements OnInit  {
-  
+export class StatisticComponent implements OnInit {
+
   statisticElements: StatisticElement[] = [
-    { player: '16 июня 2019', countMatchs: 20, yellowCard: 2, redCard: 2, goal: 15, pass: 8 },
-    { player: '20 июля 2019', countMatchs: 14, yellowCard: 1, redCard: 1, goal: 6, pass: 9 },
-    { player: '4 августа 2019', countMatchs: 18, yellowCard: 3, redCard: 0, goal: 8, pass: 12 },
+    // { player: '16 июня 2019', countMatchs: 20, yellowCard: 2, redCard: 2, goal: 15, pass: 8 },
+    // { player: '20 июля 2019', countMatchs: 14, yellowCard: 1, redCard: 1, goal: 6, pass: 9 },
+    // { player: '4 августа 2019', countMatchs: 18, yellowCard: 3, redCard: 0, goal: 8, pass: 12 },
   ];
 
-  displayedColumns: string[] = ['player', 'countMatchs', 'yellowCard', 'redCard','goal','pass'];
-  dataSource = new MatTableDataSource(this.statisticElements);
+  displayedColumns: string[] = ['player', 'countMatchs', 'yellowCard', 'redCard', 'goal', 'pass'];
+  dataSource: MatTableDataSource<StatisticElement>;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor() { 
+  constructor(public playerAPI: PlayerService, public calendarAPI: CalendarService) {
+    this.playerAPI.getPlayers().subscribe(players => {
+      players.forEach(player => {
+        this.statisticElements.push({ player: player, countMatchs: 0, yellowCard: 0, redCard: 0, goal: 0, pass: 0 })
+      })
+      this.calendarAPI.getCalendarMatches().subscribe(matches => {
+        matches.forEach(match => {
+          this.statisticElements.forEach(element => {
+            if (match.isPast && match.composition.find(x => element.player.id == x.id)) { element.countMatchs = element.countMatchs + 1 };
+            if (match.yellowCards.find(x => element.player.name == x.player.name && element.player.surname == x.player.surname && x.player.team == "own")) { element.yellowCard = element.yellowCard + 1 };
+            if (match.redCards.find(x => element.player.name == x.player.name && element.player.surname == x.player.surname && x.player.team == "own")) { element.redCard = element.redCard + 1 };
+            if (match.goalsList.ownGoals.find(x => element.player.name == x.player.name && element.player.surname == x.player.surname)) { element.goal = element.goal + 1 };
+          })
+        })
+      })
+      this.setDataSource(this.statisticElements);
+    })
+
   }
 
-  ngOnInit(){
-  this.dataSource.sort = this.sort;
+  ngOnInit() {
+  }
+
+  setDataSource(array: StatisticElement[]) {
+    this.dataSource = new MatTableDataSource(array);
+    this.dataSource.sort = this.sort;
+    console.log(this.dataSource)
   }
 
 }

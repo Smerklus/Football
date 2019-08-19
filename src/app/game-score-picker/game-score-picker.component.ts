@@ -30,10 +30,10 @@ export class GameScorePickerComponent implements OnChanges, OnInit {
   changeSecondScoreScroll(scrollEvent) {
     scrollEvent.preventDefault();
     if (scrollEvent.deltaY < 0 && this.firstScore < 50) {
-      this.firstScore++;
+      this.secondScore++;
     }
     if (scrollEvent.deltaY > 0 && this.firstScore > 0) {
-      this.firstScore--;
+      this.secondScore--;
     }
     this.addScore();
   }

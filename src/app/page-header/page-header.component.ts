@@ -17,6 +17,7 @@ export class PageHeaderComponent implements OnInit {
     { value: "", viewValue: "Новости" },
     { value: "team", viewValue: "Команды" },
     { value: "calendar", viewValue: "Календарь" },
+    { value: "edit_calendar", viewValue: "Форма матча" },
     { value: "statistic", viewValue: "Статистика" },
     { value: "contacts", viewValue: "Контакты" },
     { value: "trainers_panel", viewValue: "Тренерский состав" },

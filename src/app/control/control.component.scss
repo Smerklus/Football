@@ -4,42 +4,65 @@ $primary-light-color: #b0ff57;
 $secondary-color: #ff4081;
 $secondary-dark-color: #c60055;
 $secondary-light-color: #ff79b0;
-.mat-button{
+.mat-button {
   width: 15px;
 }
 .form-content {
   padding: 20px 50px 20px 50px;
   display: flex;
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .form-player {
   display: block;
   background: white;
 }
-.form-player, .table-composition{
+.form-player,
+.table-composition {
   width: 600px;
 }
-.form-player-body{
+.form-player-body {
   padding: 30px;
   display: flex;
-    flex-direction: column;
+  flex-direction: column;
+  height: 270px;
+  justify-content: space-between;
 }
-.form-player, .table-composition{
+.form-player,
+.table-composition {
   margin: 16px;
 }
 
-.form-calendar-header, .form-player-header {
+.form-calendar-header,
+.form-player-header {
   background: #f2f2f2;
   height: 40px;
   padding: 8px 20px;
   font-size: 16px;
   color: grey;
 }
-.table-composition-body{
+.grid-player-form {
+  height: 220px;
+  display: flex;
+}
+.personal-info-group{
+  padding: 0 30px 0 0;
+    height: 144px;
+    display: flex;
+    justify-content: space-between;
+    flex: 3 1 auto;
+    flex-direction: column;
+}
+.player-info-group{
+  display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1 1 auto;
+}
+.table-composition-body {
   background: white;
   height: 343px;
-    overflow: auto;
+  overflow: auto;
 }
 .table-composition-header {
   background: #f2f2f2;
@@ -51,14 +74,14 @@ $secondary-light-color: #ff79b0;
   justify-content: space-between;
   align-items: baseline;
 }
-button{
+button {
   align-self: flex-end;
   width: 210px;
 }
-table{
+table {
   width: 100%;
 }
-.mat-option:hover{
+.mat-option:hover {
   color: white;
-    background: #ff80ab;
+  background: #ff80ab;
 }

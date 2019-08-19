@@ -2,11 +2,11 @@
   <div class="header-title">
     <ng-container *ngFor="let header of nameHeader; let i = index">
       <ng-container *ngIf="header">
-      <ng-container *ngIf="i>0">
-        <mat-icon>redo</mat-icon>
+        <ng-container *ngIf="i>0">
+          <mat-icon>arrow_forward_ios</mat-icon>
+        </ng-container>
+        {{header.viewValue}}
       </ng-container>
-      {{header.viewValue}}
     </ng-container>
-  </ng-container>
   </div>
 </div>

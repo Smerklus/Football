@@ -28,29 +28,24 @@ tr.example-element-row:not(.example-expanded-row):active {
   padding: 8px;
   font-weight: lighter;
   margin: 8px 0;
-  height: 104px;
   display: flex;
   flex-direction: column;
 }
-.goals-list{
+.example-element-teams{
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 200px 200px;
+}
+.goals-list {
   display: grid;
   grid-template-columns: 360px;
   align-self: center;
-}
-.own-goals-list{
-    padding-right: 170px;
-    text-align: left;
-}
-.oponent-goals-list{
-    padding-left: 170px;
-    text-align: right;
 }
 .example-element-symbol {
   font-weight: bold;
   font-size: 40px;
   line-height: normal;
 }
-
 table {
   ::ng-deep {
     .mat-sort-header-container {
@@ -79,6 +74,7 @@ table {
   margin: 4px;
   display: block;
   background: white;
+  width: 700px;
 }
 .form-content {
   padding: 20px 50px 20px 50px;
@@ -110,4 +106,53 @@ table {
 .mat-button {
   min-width: 40px;
   padding: 0 5px;
+}
+.mat-option:hover:not(.mat-option-disabled) {
+  background: #ff4081;
+  color: white;
+}
+.oponent-goals-list{
+  display: flex;
+  text-align: right;
+  justify-content: flex-end;
+  align-items: center;
+  .goal{
+    display: flex;
+    width: 167px;
+  }
+  .yellowCard{
+    display: flex;
+    width: 167px;
+  }
+  .redCard{
+    display: flex;
+    width: 167px;
+  }
+}
+.own-goals-list{
+  display: flex;
+  text-align: left;
+  align-items: center;
+  .goal{
+    display: flex;
+    width: 167px;
+  };
+  .yellowCard{
+    display: flex;
+    width: 167px;
+  };
+  .redCard{
+    display: flex;
+    width: 167px;
+  }
+}
+.spacer{
+  flex: 1 1 auto;
+}
+.time-line {
+  display: inline-block;
+  width: 8px;
+  background: #c60055;
+  margin: 0 9px;
+  height: 25px;
 }

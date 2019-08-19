@@ -7,13 +7,22 @@
   justify-content: space-between;
   align-items: center;
 }
-.players-content{
+.players-content {
   display: grid;
   grid-template-columns: auto auto auto;
 }
-.form-goals-list{
+.protocol-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.form-goals-list {
   display: grid;
-  grid-template-columns: 270px 270px;
+  grid-template-columns: 270px 20px 270px;
+}
+hr {
+  border-color: #ff4081;
+  margin-bottom: 20px;
 }
 mat-tab-group {
   height: 330px;
@@ -54,7 +63,16 @@ mat-form-field {
   display: flex;
   flex-direction: column;
 }
+.mat-option:hover:not(.mat-option-disabled) {
+  background: #ff4081;
+  color: white;
+}
 .date-match {
   position: relative;
   bottom: -3px;
+}
+.teams-names {
+  display: grid;
+  grid-template-columns: 270px 20px 270px;
+  text-align: center;
 }

@@ -32,6 +32,7 @@ import { DeleteDialogPlayerComponent } from './delete-dialog-player/delete-dialo
 import { TrainersControlComponent } from './trainers-control/trainers-control.component';
 import { TrainerService } from './services/trainers.service';
 import { PageHeaderComponent } from './page-header/page-header.component';
+import { CalendarFormComponent } from './calendar/edit-calendar/calendar-form/calendar-form.component';
 
 
 @NgModule({
@@ -56,6 +57,7 @@ import { PageHeaderComponent } from './page-header/page-header.component';
     DeleteDialogPlayerComponent,
     TrainersControlComponent,
     PageHeaderComponent,
+    CalendarFormComponent,
   ],
   imports: [
     BrowserModule,

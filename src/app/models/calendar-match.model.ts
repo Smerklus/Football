@@ -12,6 +12,9 @@ export class CalendarMatch {
         public score: any,
         public goalsList: GoalsList,
         public composition: any,
+        public yellowCards: any,
+        public redCards: any,
+        public isPast: boolean,
         public id: number
     ) { }
 }
