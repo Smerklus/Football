@@ -1,15 +1,18 @@
-# FootballProj
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.3.
-
+# Football
 An example project that allows you to manage the schedule of matches and the composition of the football team.
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Install `node.js v10+`
 
-## Start JSON server
+Run the following commands:
 
-Run json-server --watch db.json. Navigate to `http://localhost:3000/`.
+`cd football`
 
+`npm i`
 
+`ng serve` - to run application
+
+Open new terminal window and run:
+
+`npm run db` - to run database
