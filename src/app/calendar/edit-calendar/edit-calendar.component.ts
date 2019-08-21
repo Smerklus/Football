@@ -17,45 +17,27 @@ export interface PlayerGoal {
   selector: 'app-edit-calendar',
   templateUrl: './edit-calendar.component.html',
   styleUrls: ['./edit-calendar.component.scss'],
-  // providers: [
-  //   {provide: MAT_CHECKBOX_CLICK_ACTION, useValue: 'noop'}
-  // ]
 })
-export class EditCalendarComponent implements OnChanges, OnInit, DoCheck {
+export class EditCalendarComponent implements OnInit {
 
   teamTypes: TeamType[] = [
     { value: 'main', viewValue: 'РИВ ГОШ' },
     { value: 'd', viewValue: 'РИВ ГОШ - д' },
   ];
 
+  @ViewChild(MatTable, { static: false }) table: MatTable<any>;
   ownPlayersGoals: PlayerGoal[] = [];
   oponentPlayersGoals: PlayerGoal[] = [];
-
-  inputDate;
-  inputTime;
-  inputOponent;
-  inputScore = '0:0';
-  calendarMatches: CalendarMatch[] = [];
+  calendarForm: FormGroup;
   players: Player[] = [];
   mainAllPurpose: Player[] = [];
-  teamType;
+  inputTime;
   step = 0;
   isPastDate;
   id;
   currentMatch;
   outputTime;
   outputScore;
-  todayDate;
-  calendarForm: FormGroup;
-  isChecked;
-  inputChecked;
-  indexSamePlayer;
-  isDisabled;
-  selectedTeamType = 'main';
-  oldFirstOutputScore;
-  oldSecondOutputScore;
-
-  @ViewChild(MatTable, { static: false }) table: MatTable<any>;
   firstOutputScore: any;
   secondOutputScore: any;
   selectedPlayerGoal: any;
@@ -64,174 +46,22 @@ export class EditCalendarComponent implements OnChanges, OnInit, DoCheck {
   selectedPlayerRedCard: any;
   playersCards: any[];
 
-
   constructor(public calendarApi: CalendarService, public playerApi: PlayerService, public activatedRoute: ActivatedRoute, public route: Router, public fb: FormBuilder) {
     playerApi.getPlayers().subscribe(x => this.players = x);
     activatedRoute.paramMap.subscribe(x => {
-
       this.id = x.get('id');
       if (this.id) {
         calendarApi.getMatchById(this.id).subscribe(x => {
           this.currentMatch = x;
-
           if (this.currentMatch) {
-            this.inputScore = this.currentMatch.score;
-            if(!this.currentMatch.score){
-              this.inputScore = "0:0"
-            }
+            this.mainAllPurpose = this.currentMatch.composition;
             this.inputTime = this.currentMatch.time;
             this.isPastDate = new Date(this.currentMatch.date) < new Date;
-            this.mainAllPurpose = this.currentMatch.composition;
-            this.outputScore = this.inputScore;
-            if(this.currentMatch.score){
-            this.oldFirstOutputScore = this.currentMatch.score.split(":")[0];
-            this.oldSecondOutputScore = this.currentMatch.score.split(":")[1];
-            };
-            // Костыль для отсутствующих TeamType
-            if (this.currentMatch.teamType) {
-              this.selectedTeamType = this.currentMatch.teamType;
-              this.calendarForm.patchValue({
-                compositionData: {
-                  teamType: this.teamTypes.find(z => z.value == this.currentMatch.teamType.value),
-                },
-              })
-            }
-
-            // Заполнение массивы опонентов из БД
-            if (this.currentMatch.oponentPlayers) {
-              this.currentMatch.oponentPlayers.forEach(x => {
-                (<FormArray>this.calendarForm.controls.oponentData.get('oponentPlayers')).push(
-                  new FormGroup({
-                    name: new FormControl(x.name),
-                    surname: new FormControl(x.surname)
-                  })
-                );
-              });
-            };
-            if (this.currentMatch.goalsList) {
-              this.currentMatch.goalsList.ownGoals.forEach(x => {
-                (<FormArray>this.calendarForm.controls.protocolData.get('ownGoals')).push(
-                  new FormGroup({
-                    player: new FormControl(x.player),
-                    time: new FormControl(x.time)
-                  })
-                );
-              });
-              this.currentMatch.goalsList.oponentGoals.forEach(x => {
-                (<FormArray>this.calendarForm.controls.protocolData.get('oponentGoals')).push(
-                  new FormGroup({
-                    player: new FormControl(x.player),
-                    time: new FormControl(x.time)
-                  })
-                );
-              });
-            };
-
-            // Патч формы календаря
-            this.calendarForm.patchValue({
-              calendarData: {
-                date: this.currentMatch.date,
-              },
-              // compositionData: {
-              //   teamType: this.teamTypes.find(z => z.value == this.currentMatch.teamType.value),
-              // },
-              oponentData: {
-                oponentTeam: this.currentMatch.oponent,
-              }
-            });
-            console.log(this.calendarForm)
           };
         });
       }
-
-
-
     })
   }
-
-  chooseMainTeam(value) {
-    this.teamType = value;
-  }
-
-  setStep(index: number) {
-    this.step = index;
-  }
-
-  nextStep() {
-    this.step++;
-  }
-
-  prevStep() {
-    this.step--;
-  }
-
-  updateTime(time) {
-    this.outputTime = time;
-  }
-  updateScore(score) {
-    this.outputScore = score;
-    this.addOwnGoal(this.outputScore);
-    this.addOponentGoal(this.outputScore);
-  }
-
-  onSubmitForm(formData: any, formDirective: FormGroupDirective) {
-    if (this.id) {
-
-      this.calendarApi.putMatchById(
-        this.id,
-        {
-          date: this.calendarForm.value.calendarData.date,
-          time: this.outputTime,
-          oponent: this.calendarForm.value.oponentData.oponentTeam,
-          score: this.outputScore,
-          teamType: this.calendarForm.value.compositionData.teamType,
-          composition: this.mainAllPurpose,
-          oponentPlayers: this.calendarForm.value.oponentData.oponentPlayers,
-          goalsList: {
-            ownGoals: this.calendarForm.value.protocolData.ownGoals,
-            oponentGoals: this.calendarForm.value.protocolData.oponentGoals
-          },
-          yellowCards: this.calendarForm.value.protocolData.yellowCards,
-          redCards: this.calendarForm.value.protocolData.redCards,
-          isPast: this.isPastDate,
-        }).subscribe(x => {
-          console.log(this.calendarForm)
-          formDirective.resetForm();
-          this.calendarForm.reset();
-          this.route.navigate(['/calendar'])
-
-        })
-    }
-    else {
-      this.calendarApi.postCalendarMatch(
-        {
-          date: this.calendarForm.value.calendarData.date,
-          time: this.outputTime,
-          oponent: this.calendarForm.value.oponentData.oponentTeam,
-          score: this.outputScore,
-          teamType: this.calendarForm.value.compositionData.teamType,
-          composition: this.mainAllPurpose,
-          oponentPlayers: this.calendarForm.value.oponentData.oponentPlayers,
-          goalsList: {
-            ownGoals: this.calendarForm.value.protocolData.ownGoals,
-            oponentGoals: this.calendarForm.value.protocolData.oponentGoals
-          },
-          yellowCards: this.calendarForm.value.protocolData.yellowCards,
-          redCards: this.calendarForm.value.protocolData.redCards,
-          isPast: this.isPastDate,
-        }).subscribe(x => {
-          console.log(this.calendarForm)
-        })
-    }
-
-  }
-
-  ngOnChanges() {
-  }
-  ngDoCheck(){
-    console.log('changes')
-  }
-
   ngOnInit() {
     this.calendarForm = new FormGroup({
       oponentData: new FormGroup({
@@ -253,182 +83,74 @@ export class EditCalendarComponent implements OnChanges, OnInit, DoCheck {
       }),
     })
   }
+  setStep(index: number) {
+    this.step = index;
+  };
+  nextStep() {
+    this.step++;
+  };
+  prevStep() {
+    this.step--;
+  };
+  updateTime(time) {
+    this.outputTime = time;
+  };
+  updateScore(score) {
+    this.outputScore = score;
+  };
+  updateMainAllPurpose(mainAllPurpose) {
+    this.mainAllPurpose = mainAllPurpose;
+  };
+  onSubmitForm(formData: any, formDirective: FormGroupDirective) {
+    if (this.id) {
 
-  compareDate() {
-    this.isPastDate = new Date(this.calendarForm.value.calendarData.date) < new Date;
-  }
-
-  onChange(event, player) {
-
-    console.log(event)
-    console.log(player)
-    if (event.checked) {
-      if (!this.mainAllPurpose) {
-        this.mainAllPurpose = [];
-      }
-      this.mainAllPurpose.push(player)
+      this.calendarApi.putMatchById(
+        this.id,
+        {
+          date: this.calendarForm.value.calendarData.date,
+          time: this.outputTime,
+          oponent: this.calendarForm.value.oponentData.oponentTeam,
+          score: this.outputScore,
+          teamType: this.calendarForm.value.compositionData.teamType,
+          composition: this.mainAllPurpose,
+          oponentPlayers: this.calendarForm.value.oponentData.oponentPlayers,
+          goalsList: {
+            ownGoals: this.calendarForm.value.protocolData.ownGoals,
+            oponentGoals: this.calendarForm.value.protocolData.oponentGoals
+          },
+          yellowCards: this.calendarForm.value.protocolData.yellowCards,
+          redCards: this.calendarForm.value.protocolData.redCards,
+          isPast: this.isPastDate,
+        }).subscribe(x => {
+          formDirective.resetForm();
+          this.calendarForm.reset();
+          this.route.navigate(['/calendar'])
+        })
     }
     else {
-      let indexSamePlayer = this.mainAllPurpose.findIndex(x => x.id == player.id)
-      this.mainAllPurpose.splice(indexSamePlayer, 1)
+      this.calendarApi.postCalendarMatch(
+        {
+          date: this.calendarForm.value.calendarData.date,
+          time: this.outputTime,
+          oponent: this.calendarForm.value.oponentData.oponentTeam,
+          score: this.outputScore,
+          teamType: this.calendarForm.value.compositionData.teamType,
+          composition: this.mainAllPurpose,
+          oponentPlayers: this.calendarForm.value.oponentData.oponentPlayers,
+          goalsList: {
+            ownGoals: this.calendarForm.value.protocolData.ownGoals,
+            oponentGoals: this.calendarForm.value.protocolData.oponentGoals
+          },
+          yellowCards: this.calendarForm.value.protocolData.yellowCards,
+          redCards: this.calendarForm.value.protocolData.redCards,
+          isPast: this.isPastDate,
+        }).subscribe(x => {
+        })
     }
-  }
-
-  isPlayerChecked(player) {
-    if (this.currentMatch && this.currentMatch.composition) {
-      return this.currentMatch.composition.some(x => x.id == player.id)
-    }
-  }
-
-  isDisabledAllPurpose(player) {
-    if (this.mainAllPurpose) {
-      let allPurposes = []
-      this.mainAllPurpose.forEach(x => {
-        if (x.role.value == 'all-purpose') {
-          allPurposes.push(x)
-        }
-      })
-      let isChecked = this.mainAllPurpose.some(z => z.id == player.id)
-      if (allPurposes.length > 3 && !isChecked) {
-        return true;
-      }
-      else {
-        return false;
-      }
-    }
-  }
-
-  isDisabledGoalkeepers(player) {
-    if (this.mainAllPurpose) {
-      let goalkeepers = []
-      this.mainAllPurpose.forEach(x => {
-        if (x.role.value == 'goalkeeper') {
-          goalkeepers.push(x)
-        }
-      })
-      let isChecked = this.mainAllPurpose.some(z => z.id == player.id)
-      if (goalkeepers.length > 0 && !isChecked) {
-        return true;
-      }
-      else {
-        return false;
-      }
-    }
-  }
-
-
-  isDisabledSelect() {
-    if (this.calendarForm.value.compositionData.teamType.value && this.mainAllPurpose)
-      return this.mainAllPurpose.length > 0;
-  }
-
-  addOponent() {
-    (<FormArray>this.calendarForm.controls.oponentData.get('oponentPlayers')).push(
-      new FormGroup({
-        name: new FormControl('', Validators.required),
-        surname: new FormControl('', Validators.required)
-      })
-    );
 
   }
-  addYellowCard() {
-    (<FormArray>this.calendarForm.controls.protocolData.get('yellowCards')).push(
-      new FormGroup({
-        player: new FormControl('', Validators.required),
-        time: new FormControl('', Validators.required)
-      })
-    );
-
-  }
-  addRedCard() {
-    (<FormArray>this.calendarForm.controls.protocolData.get('redCards')).push(
-      new FormGroup({
-        player: new FormControl('', Validators.required),
-        time: new FormControl('', Validators.required)
-      })
-    );
-
-  }
-
-  removeYellowCard(i: number) {
-    (<FormArray>this.calendarForm.controls.protocolData.get('yellowCards')).removeAt(i);
-
-  }
-  removeRedCard(i: number) {
-    (<FormArray>this.calendarForm.controls.protocolData.get('redCards')).removeAt(i);
-
-  }
-  removeOponent(i: number) {
-    (<FormArray>this.calendarForm.controls.oponentData.get('oponentPlayers')).removeAt(i);
-
-  }
-
-  addOwnGoal(score) {
-    if (score) {
-      this.firstOutputScore = score.split(":")[0];
-      console.log(this.firstOutputScore)
-      this.secondOutputScore = score.split(":")[1];
-    }
-    if(!this.oldFirstOutputScore){
-      this.oldFirstOutputScore = 0;
-    }
-    console.log(this.oldFirstOutputScore)
-    if (+this.oldFirstOutputScore < +this.firstOutputScore) {
-      if (this.currentMatch && this.currentMatch.goalsList.ownGoals && +this.firstOutputScore <= this.currentMatch.goalsList.ownGoals.length) {
-        (<FormArray>this.calendarForm.controls.protocolData.get('ownGoals')).push(
-          new FormGroup({
-            player: new FormControl(this.currentMatch.goalsList.ownGoals[this.firstOutputScore - 1].player),
-            time: new FormControl(this.currentMatch.goalsList.ownGoals[this.firstOutputScore - 1].time)
-          })
-        );
-      }
-      else {
-        (<FormArray>this.calendarForm.controls.protocolData.get('ownGoals')).push(
-          new FormGroup({
-            player: new FormControl('', Validators.required),
-            time: new FormControl('', Validators.required)
-          })
-        );
-      }
-    }
-    else {
-      (<FormArray>this.calendarForm.controls.protocolData.get('ownGoals')).removeAt(this.firstOutputScore);
-    }
-    this.oldFirstOutputScore = this.firstOutputScore;
-  }
-  addOponentGoal(score) {
-    if (score) {
-      this.firstOutputScore = score.split(":")[0];
-      console.log(this.firstOutputScore)
-      this.secondOutputScore = score.split(":")[1];
-    }
-    if(!this.oldSecondOutputScore){
-      console.log(this.oldSecondOutputScore)
-      this.oldSecondOutputScore = 0;
-    }
-    console.log(this.oldSecondOutputScore)
-    if (+this.oldSecondOutputScore < +this.secondOutputScore) {
-      if (this.currentMatch && this.currentMatch.goalsList.oponentGoals && +this.secondOutputScore <= this.currentMatch.goalsList.oponentGoals.length) {
-        (<FormArray>this.calendarForm.controls.protocolData.get('oponentGoals')).push(
-          new FormGroup({
-            player: new FormControl(this.currentMatch.goalsList.oponentGoals[this.secondOutputScore - 1].player),
-            time: new FormControl(this.currentMatch.goalsList.oponentGoals[this.secondOutputScore - 1].time)
-          })
-        );
-      }
-      else {
-        (<FormArray>this.calendarForm.controls.protocolData.get('oponentGoals')).push(
-          new FormGroup({
-            player: new FormControl('', Validators.required),
-            time: new FormControl('', Validators.required)
-          })
-        );
-      }
-    }
-    else {
-      (<FormArray>this.calendarForm.controls.protocolData.get('oponentGoals')).removeAt(this.secondOutputScore);
-    }
-    this.oldSecondOutputScore = this.secondOutputScore;
+  compareDate(outputIsPastDate) {
+    this.isPastDate = outputIsPastDate;
   }
 
   updatePlayersGoals() {
@@ -516,53 +238,5 @@ export class EditCalendarComponent implements OnChanges, OnInit, DoCheck {
         return 1;
       return 0;
     });
-  }
-
-  public changeTeamType(event): void {
-    this.selectedTeamType = event.value;
-  }
-  public changePlayerGoal(event): void {
-    this.selectedPlayerGoal = event.value;
-    console.log(this.calendarForm)
-  }
-  public changePlayerYellowCard(event): void {
-    this.selectedPlayerYellowCard = event.value;
-    console.log(this.calendarForm)
-  }
-  public changePlayerRedCard(event): void {
-    this.selectedPlayerRedCard = event.value;
-    console.log(this.calendarForm)
-  }
-  compareOwnFn(type1: any, type2: any): boolean {
-    if (type1.name === type2.name && type1.surname === type2.surname && type1.autoGoal === type2.autoGoal) {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-  compareOponentFn(type1: any, type2: any): boolean {
-    if (type1.name === type2.name && type1.surname === type2.surname && type1.autoGoal === type2.autoGoal) {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-  compareYellowCardFn(type1: any, type2: any): boolean {
-    if (type1.name === type2.name && type1.surname === type2.surname && type1.autoGoal === type2.autoGoal) {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-  compareRedCardFn(type1: any, type2: any): boolean {
-    if (type1.name === type2.name && type1.surname === type2.surname && type1.autoGoal === type2.autoGoal) {
-      return true;
-    }
-    else {
-      return false;
-    }
   }
 }

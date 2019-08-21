@@ -6,9 +6,6 @@ import { CalendarMatch } from '../models/calendar-match.model';
 
 @Injectable()
 export class CalendarService{
-  editMatchById(arg0: { date: any; time: any; oponent: any; score: any; }) {
-    throw new Error("Method not implemented.");
-  }
 
     constructor(private http: HttpClient){    }
 

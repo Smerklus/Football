@@ -13,6 +13,7 @@ import { YellowCardComponent } from './statistic/yellow-card/yellow-card.compone
 import { EditCalendarComponent } from './calendar/edit-calendar/edit-calendar.component';
 import { ProtocolComponent } from './protocol/protocol.component';
 import { TrainersControlComponent } from './trainers-control/trainers-control.component';
+import { NewsComponent } from './news/news.component';
 
 const statisticRoutes: Routes = [
   { path: 'match_composition', component: MatchCompositionComponent },
@@ -32,6 +33,7 @@ const appRoutes: Routes = [
   { path: 'calendar/edit_calendar', component: EditCalendarComponent },
   { path: 'protocol/:id', component: ProtocolComponent },
   { path: 'statistic', component: StatisticComponent, children: statisticRoutes },
+  { path: 'news', component: NewsComponent},
   { path: '', component: MainComponent },
   
 ];

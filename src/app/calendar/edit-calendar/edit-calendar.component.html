@@ -18,20 +18,10 @@
                 <mat-icon>date_range</mat-icon>
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <div formGroupName="calendarData">
-              <!-- Форма выбора даты -->
-              <mat-form-field class="date-match">
-                <input matInput [matDatepicker]="picker" (dateChange)="compareDate()" formControlName='date'
-                  placeholder="Выберите дату игры">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>
-
-              <!-- Форма выбора времени -->
-              <app-time-picker (inputTimeChange)="updateTime($event)" [inputTime]="inputTime"></app-time-picker>
-              <br>
-
-            </div>
+            <!-- Форма выбора даты -->
+            <app-calendar-form [parentForm]="calendarForm" (outputIsPastDate)="compareDate($event)">
+            </app-calendar-form>
+            <app-time-picker (inputTimeChange)="updateTime($event)" [inputTime]="inputTime"></app-time-picker>
             <mat-action-row>
               <button mat-button color="primary" type="button" (click)="nextStep()">Next</button>
             </mat-action-row>
@@ -47,70 +37,7 @@
                 <mat-icon>people</mat-icon>
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <div formGroupName="compositionData">
-              <mat-form-field style="width: 320px">
-                <mat-label>Команда</mat-label>
-                <mat-select [disabled]="isDisabledSelect()" (selectionChange)="changeTeamType($event)"
-                  formControlName='teamType'>
-                  <mat-option *ngFor="let teamType of teamTypes" [value]="teamType">
-                    {{teamType.viewValue}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <ng-container *ngIf="selectedTeamType.value == 'main'">
-
-                <div class="main-team-all-purpose">
-                  <h3>Универсалы</h3>
-                  <div class="players-content">
-                    <ng-container class="main-team-checkbox" *ngFor="let player of players">
-                      <ng-container *ngIf="player.teamType.value=='main' && player.role.value=='all-purpose'">
-                        <mat-checkbox [disabled]="isDisabledAllPurpose(player)" [checked]="isPlayerChecked(player)"
-                          [id]="player.id" (change)="onChange($event,player)">
-                          {{player.name}} {{player.surname}}</mat-checkbox>
-                      </ng-container>
-                    </ng-container>
-                  </div>
-                </div>
-                <div class="main-team-goalkeepers">
-                  <h3>Голкиперы</h3>
-                  <div class="players-content">
-                    <ng-container class="main-team-checkbox" *ngFor="let player of players">
-                      <ng-container *ngIf="player.teamType.value=='main' && player.role.value=='goalkeeper'">
-                        <mat-checkbox [disabled]="isDisabledGoalkeepers(player)" [checked]="isPlayerChecked(player)"
-                          [id]="player.id" (change)="onChange($event,player)">
-                          {{player.name}} {{player.surname}}</mat-checkbox>
-                      </ng-container>
-                    </ng-container>
-                  </div>
-                </div>
-              </ng-container>
-              <ng-container *ngIf="selectedTeamType.value =='d'">
-                <div class="d-team-all-purpose">
-                  <h3>Универсалы</h3>
-                  <div class="players-content">
-                    <ng-container class="d-team-checkbox" *ngFor="let player of players">
-                      <ng-container *ngIf="player.teamType.value=='d' && player.role.value=='all-purpose'">
-                        <mat-checkbox [disabled]="isDisabledAllPurpose(player)" [checked]="isPlayerChecked(player)"
-                          [id]="player.id" (change)="onChange($event,player)">
-                          {{player.name}} {{player.surname}}</mat-checkbox>
-                      </ng-container>
-                    </ng-container>
-                  </div>
-                </div>
-                <div class="d-team-goalkeepers">
-                  <h3>Голкиперы</h3>
-                  <div class="players-content">
-                    <ng-container class="d-team-checkbox" *ngFor="let player of players">
-                      <ng-container *ngIf="player.teamType.value=='d' && player.role.value=='goalkeeper'">
-                        <mat-checkbox [disabled]="isDisabledGoalkeepers(player)" [checked]="isPlayerChecked(player)"
-                          [id]="player.id" (change)="onChange($event,player)">
-                          {{player.name}} {{player.surname}}</mat-checkbox>
-                      </ng-container>
-                    </ng-container>
-                  </div>
-                </div>
-              </ng-container>
-            </div>
+            <app-composition-form [parentForm]="calendarForm" [inputPlayers]="players" (onChangeMainAllPurpose)="updateMainAllPurpose($event)"></app-composition-form>
             <mat-action-row>
               <button mat-button color="warn" type="button" (click)="prevStep()">Previous</button>
               <button mat-button color="primary" type="button" (click)="nextStep()">Next</button>
@@ -127,38 +54,11 @@
                 <mat-icon>person</mat-icon>
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <div formGroupName='oponentData'>
-              <!-- Форма выбора команды соперника -->
-              <mat-form-field style="width: 218px">
-                <input matInput placeholder="Введите команду соперника" formControlName='oponentTeam'
-                  autocomplete="off">
-              </mat-form-field>
-              <div formArrayName='oponentPlayers'>
-                <ng-container
-                  *ngFor="let oponentPlayer of calendarForm.controls.oponentData.controls.oponentPlayers.controls; let i = index;">
-                  <div [formGroupName]="i">
-                    <mat-form-field style="width: 218px">
-                      <input matInput placeholder="Введите имя игрока" [formControl]='oponentPlayer.controls["name"]'
-                        autocomplete="off">
-                    </mat-form-field>
-                    <mat-form-field style="width: 218px">
-                      <input matInput placeholder="Введите фамилию игрока"
-                        [formControl]='oponentPlayer.controls["surname"]' autocomplete="off">
-                    </mat-form-field>
-                    <button mat-button type="button" (click)="removeOponent(i)">
-                      <mat-icon>remove_circle_outline</mat-icon>
-                    </button>
-                  </div>
-                </ng-container>
-              </div>
-              <button mat-button [disabled]="calendarForm.value.oponentData.oponentTeam==''" type="button"
-                (click)="addOponent()">
-                <mat-icon>add_circle_outline</mat-icon>
-              </button>
-            </div>
+            <app-oponent-form [parentForm]="calendarForm"></app-oponent-form>
             <mat-action-row>
               <button mat-button color="warn" type="button" (click)="prevStep()">Previous</button>
-              <button mat-button color="primary" type="button" (click)="nextStep()" [disabled]="!isPastDate">Next</button>
+              <button mat-button color="primary" type="button" (click)="nextStep()"
+                [disabled]="!isPastDate">Next</button>
             </mat-action-row>
           </mat-expansion-panel>
 
@@ -173,138 +73,8 @@
                 <mat-icon>description</mat-icon>
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <div formGroupName='protocolData'>
-              <!-- Форма выбора итогового счета матча -->
-              <app-game-score-picker *ngIf="isPastDate" (onAddScore)="updateScore($event)" [inputScore]="inputScore">
-              </app-game-score-picker>
-              <div class="protocol-info">
-                <div class="teams-names">
-                  <div>{{calendarForm.value.compositionData.teamType.viewValue}}
-                    <hr>
-                  </div>
-                  <div class="spacer"></div>
-                  <div> {{calendarForm.value.oponentData.oponentTeam}}
-                    <hr>
-                  </div>
-                </div>
-                <div class="form-goals-list">
-                  <div formArrayName='ownGoals'>
-                    <ng-container
-                      *ngFor="let goal of calendarForm.controls.protocolData.controls.ownGoals.controls; let i = index;">
-                      <div [formGroupName]="i">
-                        <!-- Селектор для выбора игрока забившего гол -->
-                        <mat-form-field color="accent" style="width: 140px">
-                          <mat-label>Игрок</mat-label>
-                          <mat-select [compareWith]="compareOwnFn" [formControl]='goal.controls.player'
-                            (selectionChange)="changePlayerGoal($event)">
-                            <mat-option *ngFor="let playerGoal of ownPlayersGoals" [value]="playerGoal">
-                              {{playerGoal.name}} {{playerGoal.surname}} {{playerGoal.autoGoal}}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                        <!-- Время гола -->
-                        <mat-form-field color="accent" style="width: 76px">
-                          <input [formControl]='goal.controls["time"]' matInput min="0" max="45"
-                            placeholder="Введите время" autocomplete="off">
-                        </mat-form-field>
-                      </div>
-                    </ng-container>
-                  </div>
-                  <div class="spacer"></div>
-                  <div formArrayName='oponentGoals'>
-
-                    <ng-container
-                      *ngFor="let goal of calendarForm.controls.protocolData.controls.oponentGoals.controls; let i = index;">
-                      <div [formGroupName]="i">
-                        <!-- Селектор для выбора игрока забившего гол -->
-                        <mat-form-field color="accent" style="width: 140px">
-                          <mat-label>Игрок</mat-label>
-                          <mat-select [compareWith]="compareOponentFn" [formControl]='goal.controls.player'
-                            (selectionChange)="changePlayerGoal($event)">
-                            <mat-option *ngFor="let playerGoal of oponentPlayersGoals" [value]="playerGoal">
-                              {{playerGoal.name}} {{playerGoal.surname}} {{playerGoal.autoGoal}}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                        <!-- Время гола -->
-                        <mat-form-field color="accent" style="width: 76px">
-                          <input [formControl]='goal.controls["time"]' matInput min="0" max="45"
-                            placeholder="Введите время" autocomplete="off">
-                        </mat-form-field>
-                      </div>
-                    </ng-container>
-                  </div>
-                </div>
-                <div class="yellow-cards">
-                  <div class="yellow-cards-title">
-                    Желтые карточки
-                  </div>
-                  <div class="yellow-cards-body">
-                    <div formArrayName='yellowCards'>
-                      <ng-container
-                        *ngFor="let yellowCard of calendarForm.controls.protocolData.controls.yellowCards.controls; let i = index;">
-                        <div [formGroupName]="i">
-                          <mat-form-field color="accent" style="width: 140px">
-                            <mat-label>Игрок</mat-label>
-                            <mat-select [compareWith]="compareYellowCardFn" [formControl]='yellowCard.controls.player'
-                              (selectionChange)="changePlayerYellowCard($event)">
-                              <mat-option *ngFor="let playerCard of playersCards" [value]="playerCard">
-                                {{playerCard.name}} {{playerCard.surname}}
-                              </mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                          <mat-form-field color="accent" style="width: 76px">
-                            <input [formControl]='yellowCard.controls.time' matInput min="0" max="45"
-                              placeholder="Введите время" autocomplete="off">
-                          </mat-form-field>
-                          <button mat-button type="button" (click)="removeYellowCard(i)">
-                            <mat-icon>remove_circle_outline</mat-icon>
-                          </button>
-                        </div>
-                      </ng-container>
-                    </div>
-                    <button mat-button type="button"
-                      (click)="addYellowCard()">
-                      <mat-icon>add_circle_outline</mat-icon>
-                    </button>
-                  </div>
-                </div>
-                <div class="red-cards">
-                  <div class="red-cards-title">
-                    Красные карточки
-                  </div>
-                  <div class="red-cards-body">
-                    <div formArrayName='redCards'>
-                      <ng-container
-                        *ngFor="let redCard of calendarForm.controls.protocolData.controls.redCards.controls; let i = index;">
-                        <div [formGroupName]="i">
-                          <mat-form-field color="accent" style="width: 140px">
-                            <mat-label>Игрок</mat-label>
-                            <mat-select [compareWith]="compareRedCardFn" [formControl]='redCard.controls.player'
-                              (selectionChange)="changePlayerRedCard($event)">
-                              <mat-option *ngFor="let playerCard of playersCards" [value]="playerCard">
-                                {{playerCard.name}} {{playerCard.surname}}
-                              </mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                          <mat-form-field color="accent" style="width: 76px">
-                            <input [formControl]='redCard.controls.time' matInput min="0" max="45"
-                              placeholder="Введите время" autocomplete="off">
-                          </mat-form-field>
-                          <button mat-button type="button" (click)="removeRedCard(i)">
-                            <mat-icon>remove_circle_outline</mat-icon>
-                          </button>
-                        </div>
-                      </ng-container>
-                    </div>
-                    <button mat-button type="button"
-                    (click)="addRedCard()">
-                    <mat-icon>add_circle_outline</mat-icon>
-                  </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <app-protocol-form [parentForm]="calendarForm" [playersCards]="playersCards"
+              [ownPlayersGoals]="ownPlayersGoals" [oponentPlayersGoals]="oponentPlayersGoals" (onChangedScore)="updateScore($event)"></app-protocol-form>
             <mat-action-row>
               <button mat-button color="warn" type="button" (click)="prevStep()">Previous</button>
               <button mat-button color="primary" type="button" (click)="nextStep()">Next</button>

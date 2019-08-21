@@ -1,0 +1,12 @@
+.players-content {
+    display: grid;
+    grid-template-columns: auto auto auto;
+  }
+  .main-team-checkbox {
+    display: flex;
+    flex-direction: column;
+  }
+  .mat-option:hover:not(.mat-option-disabled) {
+    background: #ff4081;
+    color: white;
+  }

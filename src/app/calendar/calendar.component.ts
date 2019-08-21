@@ -18,7 +18,6 @@ export interface MatchType {
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-      // transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
 })
@@ -99,7 +98,6 @@ export class CalendarComponent implements OnInit {
   setDataSource(array: CalendarMatch[]) {
     this.dataSource = new MatTableDataSource(array);
     this.dataSource.sort = this.sort;
-    console.log(this.dataSource)
   }
   deleteCalendarMatch(match) {
     this.calendarService.deleteCalendarMatch(match.path[1].childNodes[1].innerHTML).subscribe(x => {
@@ -110,14 +108,12 @@ export class CalendarComponent implements OnInit {
       });
       this.sortTeams();
       this.setDataSource(this.calendarMatches);
+
     });
   }
 
   editOn(checked) {
-    // this.displayedColumns = ['edit','date', 'time', 'oponent', 'score', 'delete'];
     this.checked = checked;
-
-    console.log(checked);
   }
 
   isTeamType(composition) {
@@ -127,33 +123,31 @@ export class CalendarComponent implements OnInit {
   }
 
   addSortGoalsList(calendarMatches) {
-calendarMatches.forEach(match=>{
-  this.allGoalsList = [];
-  match.goalsList.ownGoals.forEach(ownGoal => {
-    this.allGoalsList.push({name: ownGoal.player.name,surname: ownGoal.player.surname,time: ownGoal.time, team: "own", type: 'goal'});
-  });
-  match.goalsList.oponentGoals.forEach(oponentGoal => {
-    this.allGoalsList.push({name: oponentGoal.player.name,surname: oponentGoal.player.surname,time: oponentGoal.time, team: "oponent", type: 'goal'})
-  });
-  // if (match.goalsList.yellowCards && match.goalsList.redCards){
-  match.yellowCards.forEach(yellowCard=>{
-    this.allGoalsList.push({name: yellowCard.player.name,surname: yellowCard.player.surname,time: yellowCard.time, team: yellowCard.player.team, type: 'yellowCard'})
-  })
-  match.redCards.forEach(redCard=>{
-    this.allGoalsList.push({name: redCard.player.name,surname: redCard.player.surname,time: redCard.time, team: redCard.player.team, type: 'redCard'})
-  })
-// }
-  this.allGoalsList.sort((a, b) => {
-    let timeGoalA = a.time;
-    let timeGoalB = b.time;
-    if (timeGoalA < timeGoalB)
-      return -1;
-    if (timeGoalA > timeGoalB)
-      return 1;
-    return 0;
-  });
-  match.sortedGoalsList = this.allGoalsList;
-  console.log(this.allGoalsList)
-})
+    calendarMatches.forEach(match => {
+      this.allGoalsList = [];
+      match.goalsList.ownGoals.forEach(ownGoal => {
+        this.allGoalsList.push({ name: ownGoal.player.name, surname: ownGoal.player.surname, time: ownGoal.time, team: "own", type: 'goal' });
+      });
+      match.goalsList.oponentGoals.forEach(oponentGoal => {
+        this.allGoalsList.push({ name: oponentGoal.player.name, surname: oponentGoal.player.surname, time: oponentGoal.time, team: "oponent", type: 'goal' })
+      });
+      match.yellowCards.forEach(yellowCard => {
+        this.allGoalsList.push({ name: yellowCard.player.name, surname: yellowCard.player.surname, time: yellowCard.time, team: yellowCard.player.team, type: 'yellowCard' })
+      })
+      match.redCards.forEach(redCard => {
+        this.allGoalsList.push({ name: redCard.player.name, surname: redCard.player.surname, time: redCard.time, team: redCard.player.team, type: 'redCard' })
+      })
+      this.allGoalsList.sort((a, b) => {
+        let timeGoalA = a.time;
+        let timeGoalB = b.time;
+        if (timeGoalA < timeGoalB)
+          return -1;
+        if (timeGoalA > timeGoalB)
+          return 1;
+        return 0;
+      });
+      match.sortedGoalsList = this.allGoalsList;
+      console.log(this.allGoalsList)
+    })
   }
 }

@@ -33,6 +33,11 @@ import { TrainersControlComponent } from './trainers-control/trainers-control.co
 import { TrainerService } from './services/trainers.service';
 import { PageHeaderComponent } from './page-header/page-header.component';
 import { CalendarFormComponent } from './calendar/edit-calendar/calendar-form/calendar-form.component';
+import { CompositionFormComponent } from './calendar/edit-calendar/composition-form/composition-form.component';
+import { OponentFormComponent } from './calendar/edit-calendar/oponent-form/oponent-form.component';
+import { ProtocolFormComponent } from './calendar/edit-calendar/protocol-form/protocol-form.component';
+import { MatTableModule, MatSortModule } from '@angular/material';
+import { NewsComponent } from './news/news.component';
 
 
 @NgModule({
@@ -58,6 +63,10 @@ import { CalendarFormComponent } from './calendar/edit-calendar/calendar-form/ca
     TrainersControlComponent,
     PageHeaderComponent,
     CalendarFormComponent,
+    CompositionFormComponent,
+    OponentFormComponent,
+    ProtocolFormComponent,
+    NewsComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,6 +79,8 @@ import { CalendarFormComponent } from './calendar/edit-calendar/calendar-form/ca
     ReactiveFormsModule,
     RouterModule,
     HttpClientModule,
+    MatTableModule,
+    MatSortModule,
   ],
   providers: [PlayerService,CalendarService,TrainerService],
   bootstrap: [AppComponent],

@@ -1,0 +1,66 @@
+<div [formGroup]="parentForm">
+<div formGroupName="compositionData">
+    <mat-form-field style="width: 320px">
+      <mat-label>Команда</mat-label>
+      <mat-select [compareWith]="compareTeamType" [disabled]="isDisabledSelect()" (selectionChange)="changeTeamType($event)"
+        formControlName='teamType'>
+        <mat-option *ngFor="let teamType of teamTypes" [value]="teamType">
+          {{teamType.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <ng-container *ngIf="selectedTeamType.value == 'main'">
+
+      <div class="main-team-all-purpose">
+        <h3>Универсалы</h3>
+        <div class="players-content">
+          <ng-container class="main-team-checkbox" *ngFor="let player of inputPlayers">
+            <ng-container *ngIf="player.teamType.value=='main' && player.role.value=='all-purpose'">
+              <mat-checkbox [disabled]="isDisabledAllPurpose(player)" [checked]="isPlayerChecked(player)"
+                [id]="player.id" (change)="onChange($event,player)">
+                {{player.name}} {{player.surname}}</mat-checkbox>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+      <div class="main-team-goalkeepers">
+        <h3>Голкиперы</h3>
+        <div class="players-content">
+          <ng-container class="main-team-checkbox" *ngFor="let player of inputPlayers">
+            <ng-container *ngIf="player.teamType.value=='main' && player.role.value=='goalkeeper'">
+              <mat-checkbox [disabled]="isDisabledGoalkeepers(player)" [checked]="isPlayerChecked(player)"
+                [id]="player.id" (change)="onChange($event,player)">
+                {{player.name}} {{player.surname}}</mat-checkbox>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="selectedTeamType.value =='d'">
+      <div class="d-team-all-purpose">
+        <h3>Универсалы</h3>
+        <div class="players-content">
+          <ng-container class="d-team-checkbox" *ngFor="let player of inputPlayers">
+            <ng-container *ngIf="player.teamType.value=='d' && player.role.value=='all-purpose'">
+              <mat-checkbox [disabled]="isDisabledAllPurpose(player)" [checked]="isPlayerChecked(player)"
+                [id]="player.id" (change)="onChange($event,player)">
+                {{player.name}} {{player.surname}}</mat-checkbox>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+      <div class="d-team-goalkeepers">
+        <h3>Голкиперы</h3>
+        <div class="players-content">
+          <ng-container class="d-team-checkbox" *ngFor="let player of inputPlayers">
+            <ng-container *ngIf="player.teamType.value=='d' && player.role.value=='goalkeeper'">
+              <mat-checkbox [disabled]="isDisabledGoalkeepers(player)" [checked]="isPlayerChecked(player)"
+                [id]="player.id" (change)="onChange($event,player)">
+                {{player.name}} {{player.surname}}</mat-checkbox>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  </div>
