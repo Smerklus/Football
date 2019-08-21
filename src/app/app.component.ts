@@ -11,10 +11,8 @@ export class AppComponent implements OnInit, OnChanges, AfterContentInit {
   ngOnInit() {
   }
   ngOnChanges() {
-    console.log('changes')
   }
   ngAfterContentInit() {
-    console.log('changes')
   }
   
 }
